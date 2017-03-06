@@ -1,0 +1,82 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Anton|Inconsolata:400,700');
+
+body {
+    font-size: 100%;
+    line-height: 1.5;
+    font-family: 'Inconsolata', monospace;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Anton', sans-serif;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #6C698D;
+    color: white;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
+    display: table;  
+}
+
+nav ul li {
+    padding: 0.75em;
+    display: table-cell;
+    text-align: center;
+    cursor: pointer;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+nav ul li:hover {
+    background-color: #D4D2D5;
+    color: rgb(68, 68, 68);
+}
+
+.nav-active {
+    border-bottom: 0.25em solid white;
+}
+
+main {
+    margin-bottom: 20%;
+}
+
+section {
+    
+}
+
+header {
+    text-align: center;
+    background-color: #6E6A6F;
+    color: white;
+    width: 100%;
+    -moz-box-sizing: border-box;
+}
+
+header h1 {
+    margin-top: 0;
+}
+
+article {
+    max-width: 34em;
+    margin: auto;
+    padding: 1em;
+    color: rgb(68, 68, 68);
+    border-bottom: 0.1em solid #D4D2D5;
+}
