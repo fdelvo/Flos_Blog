@@ -1,8 +1,8 @@
-﻿<section>
-    <article>
-        <h2>Example</h2>
+﻿<section ng-controller="TextsController" ng-init="GetTexts(); MeasureStayOnPage()">
+    <article class="preview" ng-repeat="t in texts track by t.TextId">
+        <h2>{{t.TextTitle}}</h2>
         <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren... <a href="/Text/Read">Lesen</a>
+            {{t.TextContent | htmlToPlaintext | limitTo: 300}}... <a href='/Text/Read/{{t.TextId}}'>Lesen</a>
         </p>
     </article>
 </section>

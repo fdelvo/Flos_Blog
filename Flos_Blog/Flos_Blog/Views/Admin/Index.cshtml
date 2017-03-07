@@ -3,5 +3,23 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<section ng-controller="TextsController">
+    <form ng-submit="CreateText()">
+        <label>Text Title</label>
+        <input type="text" ng-model="newText.TextTitle" required/>
+        <label>Text Content</label>
+        <textarea ui-tinymce="{trusted: true}" ng-model="newText.TextContent" required></textarea>
+        <input type="submit" value="Publish"/>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Clicks</th>
+            <th>Shares</th>
+        </tr>
+        </thead>
+    </table>
+</section>
 

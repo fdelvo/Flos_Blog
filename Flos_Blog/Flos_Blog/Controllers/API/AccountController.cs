@@ -319,7 +319,7 @@ namespace Flos_Blog.Controllers.API
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -338,10 +338,10 @@ namespace Flos_Blog.Controllers.API
             }
 
             return Ok();
-        }
+        }*/
 
         // POST api/Account/RegisterExternal
-        [OverrideAuthentication]
+        /*[OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
@@ -371,7 +371,7 @@ namespace Flos_Blog.Controllers.API
                 return GetErrorResult(result); 
             }
             return Ok();
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {

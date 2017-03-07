@@ -4,21 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <script src="https://use.fontawesome.com/0e2b5d40eb.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
 </head>
 <body>
 <header>
     <h1>Flos Blog</h1>
 </header>
-<main>
+<main ng-app="FlosBlogApp">
     @RenderBody()
 </main>
     <nav>
         <ul>
             <li class="nav-active"><a href="/Home/Index">Start</a></li>
             <li><a href="/Archive/Index">Archiv</a></li>
-            <li><a href="/About/Index">Start</a></li>
+            <li><a href="/About/Index">Über</a></li>
         </ul>
     </nav>
 </body>
