@@ -32,5 +32,8 @@ namespace Flos_Blog.Models
         }
 
         public DbSet<Text> Texts { get; set; }
+        public DbSet<StayDuration> StayDurations { get; set; }
+        public DbSet<PageStayDuration> PageStayDurations { get; set; }
+        public DbSet<TextStayDuration> TextStayDurations { get; set; }
     }
 }

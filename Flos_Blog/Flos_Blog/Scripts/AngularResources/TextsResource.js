@@ -12,6 +12,12 @@ function TextsResource($resource) {
                 isArray: true,
                 headers: { "Authorization": "Bearer " + localStorage.getItem("tokenKey") }
             },
+            TextsForAdmin: {
+                method: "GET",
+                url: "/api/apitexts/textsforadmin",
+                isArray: true,
+                headers: { "Authorization": "Bearer " + localStorage.getItem("tokenKey") }
+            },
             GetText: {
                 method: "GET",
                 url: "/api/apitexts/gettext",
@@ -20,6 +26,16 @@ function TextsResource($resource) {
             PostText: {
                 method: "POST",
                 url: "/api/apitexts/posttext",
+                headers: { "Authorization": "Bearer " + localStorage.getItem("tokenKey") }
+            },
+            TextShared: {
+                method: "POST",
+                url: "/api/apitexts/textshared",
+                headers: { "Authorization": "Bearer " + localStorage.getItem("tokenKey") }
+            },
+            SaveTextStayDuration: {
+                method: "POST",
+                url: "/api/apitexts/savetextstayduration",
                 headers: { "Authorization": "Bearer " + localStorage.getItem("tokenKey") }
             },
             PutText: {

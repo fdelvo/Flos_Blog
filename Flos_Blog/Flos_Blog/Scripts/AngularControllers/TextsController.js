@@ -6,6 +6,8 @@ TextsController.$inject = [
 
 function TextsController($scope, TextsResource) {
     $scope.newText = new TextsResource();
+    $scope.newStay = new TextsResource();
+    $scope.newShare = new TextsResource();
     $scope.CreateText = function() {
         $scope.newText.$PostText(
             function(response) {
@@ -24,6 +26,15 @@ function TextsController($scope, TextsResource) {
                 console.log(response);
             });
     };
+    $scope.GetTextsForAdmin = function () {
+        $scope.texts = TextsResource.TextsForAdmin({ page: 0, pageSize: 10 },
+            function (response) {
+                console.log(response);
+            },
+            function () {
+                console.log(response);
+            });
+    };
     $scope.GetText = function() {
         $scope.text = TextsResource.GetText( { id: getValueAtIndex(5)},
             function(response) {
@@ -35,9 +46,28 @@ function TextsController($scope, TextsResource) {
     $scope.MeasureStayOnPage = function() {
         var start = Date.now();
         window.addEventListener("beforeunload", function (e) {
-            return Math.abs(Date.now() - start);
+            $scope.newStay = {
+                id: getValueAtIndex(5),
+                duration: Math.abs(Date.now() - start)
+            }
+            $scope.newStay.$SaveTextStayDuration(function(response) {
+                console.log(response);
+            }, function() {
+                console.log(response);
+            });
         });
+        
     };
+    $scope.TextShared = function() {
+        $scope.newShare = {
+            id: getValueAtIndex()
+        }
+        $scope.newShare.$TextShared(function(response) {
+            console.log(response);
+        }, function() {
+            console.log(response);
+        });
+    }
     function getValueAtIndex (index) {
         const str = window.location.href;
         console.log(str.split("/")[index]);

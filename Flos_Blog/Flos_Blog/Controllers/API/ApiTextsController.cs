@@ -26,7 +26,42 @@ namespace Flos_Blog.Controllers.API
                 .Skip(pageSize * page)
                 .ToListAsync();
 
-            return Ok(texts);
+            var textsViewModel = new List<TextUserViewModel>();
+
+            textsViewModel.AddRange(texts.Select(t => new TextUserViewModel
+            {
+                TextId = t.TextId,
+                TextContent = t.TextContent,
+                TextDate = t.TextDate,
+                TextTitle = t.TextTitle
+            }));
+
+            return Ok(textsViewModel);
+        }
+
+        [Authorize]
+        public async Task<IHttpActionResult> TextsForAdmin(int pageSize, int page)
+        {
+            var texts = await _db.Texts
+                .OrderBy(d => d.TextDate)
+                .Take(pageSize)
+                .Skip(pageSize * page)
+                .ToListAsync();
+
+            var textsViewModel = new List<TextAdminViewModel>();
+
+            textsViewModel.AddRange(texts.Select(t => new TextAdminViewModel
+            {
+                TextId = t.TextId,
+                TextContent = t.TextContent,
+                TextDate = t.TextDate,
+                TextTitle = t.TextTitle,
+                TextShared = t.TextShared,
+                TextViews = t.TextViews,
+                TextStayDuration = GetAverageTextStayDuration(t.TextId)
+        }));
+
+            return Ok(textsViewModel);
         }
 
         // GET: api/ApiTexts/5
@@ -39,7 +74,109 @@ namespace Flos_Blog.Controllers.API
                 return NotFound();
             }
 
+            await AddView(id);           
+
             return Ok(text);
+        }
+
+        public async Task AddView(Guid id)
+        {
+            var text = await _db.Texts.FirstOrDefaultAsync(i => i.TextId == id);
+            text.TextViews += 1;
+
+            _db.Entry(text).State = EntityState.Modified;
+
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TextExists(id))
+                {
+                    return;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task<IHttpActionResult> TextShared(Guid id)
+        {
+            Text text = await _db.Texts.FindAsync(id);
+            if (text == null)
+            {
+                return NotFound();
+            }
+
+            text.TextShared += 1;
+
+            _db.Entry(text).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TextExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
+        }
+
+        public async Task SaveTextStayDuration(Guid id, int duration)
+        {
+            Text text = await _db.Texts.FindAsync(id);
+            if (text == null)
+            {
+                return;
+            }
+
+            TextStayDuration stayDuration = new TextStayDuration
+            {
+                StayDurationId = Guid.NewGuid(),
+                Duration = duration,
+                Text = text
+            };
+
+            _db.StayDurations.Add(stayDuration);
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TextExists(id))
+                {
+                    return;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public double GetAverageTextStayDuration(Guid id)
+        {
+            var average = _db.TextStayDurations
+                .Include(t => t.Text.TextId == id)
+                .Where(t => t.Text.TextId == id)
+                .Average(i => i.Duration);
+
+            return average;
         }
 
         // PUT: api/ApiTexts/5

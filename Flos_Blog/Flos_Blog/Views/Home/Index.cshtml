@@ -1,4 +1,4 @@
-﻿<section ng-controller="TextsController" ng-init="GetTexts(); MeasureStayOnPage()">
+﻿<section ng-controller="TextsController" ng-init="GetTexts()">
     <article class="preview" ng-repeat="t in texts track by t.TextId">
         <h2>{{t.TextTitle}}</h2>
         <p>

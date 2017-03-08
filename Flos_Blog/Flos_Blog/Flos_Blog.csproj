@@ -248,11 +248,17 @@
     <Compile Include="Migrations\201703071315229_initial.Designer.cs">
       <DependentUpon>201703071315229_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703081446184_stats_added.cs" />
+    <Compile Include="Migrations\201703081446184_stats_added.Designer.cs">
+      <DependentUpon>201703081446184_stats_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\PageStayDuration.cs" />
     <Compile Include="Models\Text.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -1090,6 +1096,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703071315229_initial.resx">
       <DependentUpon>201703071315229_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081446184_stats_added.resx">
+      <DependentUpon>201703081446184_stats_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
