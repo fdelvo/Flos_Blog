@@ -19,5 +19,9 @@ namespace Flos_Blog.Controllers
         {
             return View();
         }
+        public ActionResult Edit()
+        {
+            return View();
+        }
     }
 }

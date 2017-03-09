@@ -21,7 +21,7 @@ namespace Flos_Blog.Controllers.API
         public async Task<IHttpActionResult> GetTexts(int pageSize, int page)
         {
             var texts = await _db.Texts
-                .OrderBy(d => d.TextDate)
+                .OrderByDescending(d => d.TextDate)
                 .Take(pageSize)
                 .Skip(pageSize * page)
                 .ToListAsync();
@@ -40,6 +40,7 @@ namespace Flos_Blog.Controllers.API
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IHttpActionResult> TextsForAdmin(int pageSize, int page)
         {
             var texts = await _db.Texts
@@ -104,9 +105,10 @@ namespace Flos_Blog.Controllers.API
             }
         }
 
-        public async Task<IHttpActionResult> TextShared(Guid id)
+        [HttpPost]
+        public async Task<IHttpActionResult> TextShared(TextSharedViewModel model)
         {
-            Text text = await _db.Texts.FindAsync(id);
+            Text text = await _db.Texts.FindAsync(model.id);
             if (text == null)
             {
                 return NotFound();
@@ -122,7 +124,7 @@ namespace Flos_Blog.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TextExists(id))
+                if (!TextExists(model.id))
                 {
                     return NotFound();
                 }
@@ -135,9 +137,10 @@ namespace Flos_Blog.Controllers.API
             return Ok();
         }
 
-        public async Task SaveTextStayDuration(Guid id, int duration)
+        [HttpPost]
+        public async Task SaveTextStayDuration(PageStayViewModel model)
         {
-            Text text = await _db.Texts.FindAsync(id);
+            Text text = await _db.Texts.FindAsync(model.id);
             if (text == null)
             {
                 return;
@@ -146,7 +149,7 @@ namespace Flos_Blog.Controllers.API
             TextStayDuration stayDuration = new TextStayDuration
             {
                 StayDurationId = Guid.NewGuid(),
-                Duration = duration,
+                Duration = model.duration,
                 Text = text
             };
 
@@ -158,7 +161,7 @@ namespace Flos_Blog.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TextExists(id))
+                if (!TextExists(model.id))
                 {
                     return;
                 }
@@ -171,10 +174,15 @@ namespace Flos_Blog.Controllers.API
 
         public double GetAverageTextStayDuration(Guid id)
         {
-            var average = _db.TextStayDurations
-                .Include(t => t.Text.TextId == id)
+            var average = 0.0;
+
+            if (_db.TextStayDurations.Any(i => i.Text.TextId == id))
+            {
+                average = _db.TextStayDurations
+                .Include(t => t.Text)
                 .Where(t => t.Text.TextId == id)
                 .Average(i => i.Duration);
+            }
 
             return average;
         }

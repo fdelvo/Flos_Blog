@@ -3,37 +3,42 @@
     ViewBag.Title = "Index";
 }
 
-<section ng-controller="TextsController">
-    <form ng-submit="CreateText()">
-        <label>Text Title</label>
-        <input type="text" ng-model="newText.TextTitle" required/>
-        <label>Text Content</label>
-        <textarea ui-tinymce="{trusted: true}" ng-model="newText.TextContent" required></textarea>
-        <input type="submit" value="Publish"/>
-    </form>
-    <table ng-init="GetTextsForAdmin()">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Views</th>
-            <th>Shares</th>
-            <th>Aver. Stay</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="t in texts track by t.TextId">
-            <td>{{t.TextTitle}}</td>
-            <td>{{t.TextDate}}</td>
-            <td>{{t.TextViews}}</td>
-            <td>{{t.TextShares}}</td>
-            <td>{{t.TextStayDuration}}</td>
-            <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
-            <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
-        </tr>
-        </tbody>
-    </table>
+<section class="admin" ng-controller="TextsController">
+    <article>
+        <form ng-submit="CreateText()">
+            <label>Text Title</label>
+            <input type="text" ng-model="newText.TextTitle" required/>
+            <label>Text Content</label>
+            <textarea ui-tinymce="{trusted: true}" ng-model="newText.TextContent" required></textarea>
+            <input type="submit" value="Publish"/>
+            <p>{{status}}</p>
+        </form>
+    </article>
+    <article>
+        <table ng-init="GetTextsForAdmin()">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Views</th>
+                    <th>Shares</th>
+                    <th>Aver. Stay</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="t in texts track by t.TextId">
+                    <td>{{t.TextTitle}}</td>
+                    <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
+                    <td>{{t.TextViews}}</td>
+                    <td>{{t.TextShared}}</td>
+                    <td>{{t.TextStayDuration / 60000 | limitTo: 4}}</td>
+                    <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
+                    <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
 </section>
 

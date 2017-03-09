@@ -23,4 +23,15 @@ namespace Flos_Blog.Models
         public int TextShared { get; set; }
         public double TextStayDuration { get; set; }
     }
+
+    public class TextSharedViewModel
+    {
+        public Guid id { get; set; }
+    }
+
+    public class PageStayViewModel
+    {
+        public Guid id { get; set; }
+        public int duration { get; set; }
+    }
 }

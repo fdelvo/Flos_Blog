@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="admin" ng-controller="TextsController">
+    <article>
+        <form ng-init="GetText()" ng-submit="EditText()">
+            <label>Text Title</label>
+            <input type="text" ng-model="text.TextTitle" required />
+            <label>Text Content</label>
+            <textarea ui-tinymce="{trusted: true}" ng-model="text.TextContent" required></textarea>
+            <input type="submit" value="Publish" />
+            <p>{{status}}</p>
+        </form>
+    </article>
+</section>
+
