@@ -10,7 +10,7 @@
             <input type="text" ng-model="newText.TextTitle" required/>
             <label>Text Content</label>
             <textarea ui-tinymce="{trusted: true}" ng-model="newText.TextContent" required></textarea>
-            <input type="submit" value="Publish"/>
+            <input type="submit" value="Submit"/>
             <p>{{status}}</p>
         </form>
     </article>
@@ -20,6 +20,7 @@
                 <tr>
                     <th>Title</th>
                     <th>Date</th>
+                    <th>Published</th>
                     <th>Views</th>
                     <th>Shares</th>
                     <th>Aver. Stay</th>
@@ -31,9 +32,11 @@
                 <tr ng-repeat="t in texts track by t.TextId">
                     <td>{{t.TextTitle}}</td>
                     <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
+                    <td>{{t.TextPublished}}</td>
                     <td>{{t.TextViews}}</td>
-                    <td>{{t.TextShared}}</td>
+                    <td>{{t.TextShares}}</td>
                     <td>{{t.TextStayDuration / 60000 | limitTo: 4}}</td>
+                    <td><a href="" ng-click="PublishText(t.TextId, t)">Publish</a></td>
                     <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
                     <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
                 </tr>

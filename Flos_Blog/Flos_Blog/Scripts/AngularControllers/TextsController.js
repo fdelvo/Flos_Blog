@@ -5,9 +5,30 @@ TextsController.$inject = [
 ];
 
 function TextsController($scope, $rootScope, TextsResource) {
+    var page = 0;
     $scope.newText = new TextsResource();
     $scope.newStay = new TextsResource();
     $scope.newShare = new TextsResource();
+    $scope.texts = [];
+    var yearToSearchIn = new Date().getFullYear();
+    $scope.year = new Date().getFullYear();
+    $scope.yearsSinceRelease = getYearsSinceRelease();
+    function getYearsSinceRelease() {
+        const releaseYear = 2000;
+        const currentYear = new Date().getFullYear();
+        const years = [releaseYear];
+        if (currentYear - releaseYear !== 0) {
+            for (var i = 1; i < (currentYear - releaseYear)+1; i++) {
+                const yearToAdd = releaseYear + i;
+                years.push(yearToAdd);
+            }
+        }
+        return years;
+    };
+
+    $scope.SetYear = function(year) {
+        yearToSearchIn = year;
+    };
     $scope.CreateText = function() {
         $scope.newText.$PostText(
             function(response) {                
@@ -18,6 +39,16 @@ function TextsController($scope, $rootScope, TextsResource) {
                 $rootScope.status = response;
             });
     };
+    $scope.PublishText = function (id, t) {
+        $scope.textToPublish = t;
+        $scope.textToPublish.$PublishText({id: id}, 
+            function(response) {
+                console.log("Text Published");
+                location.href = location.href;
+            }, function(response) {
+                $rootScope.status = response;
+            });
+    }
     $scope.DeleteText = function(id) {
         TextsResource.DeleteText({ id: id },
             function (response) {
@@ -37,8 +68,9 @@ function TextsController($scope, $rootScope, TextsResource) {
             $rootScope = response;
         });
     };
-    $scope.GetTexts = function() {
-        $scope.texts = TextsResource.GetTexts( { page: 0, pageSize: 10 },
+    $scope.GetTexts = function () {
+        page = 0;
+        $scope.texts = TextsResource.GetTexts( { page: page, pageSize: 10 },
             function(response) {
                 console.log("texts loaded");
             },
@@ -46,8 +78,42 @@ function TextsController($scope, $rootScope, TextsResource) {
                 console.log("error");
             });
     };
+    $scope.GetTextsByMonth = function (month) {
+        $scope.texts = [];
+        $scope.texts = TextsResource.GetTextsByMonth({ month: month, year: yearToSearchIn },
+            function (response) {
+                console.log("texts loaded");
+            },
+            function () {
+                console.log("error");
+            });
+    };
+    $scope.SearchText = function () {
+        page = 0;
+        $scope.texts = [];
+        $scope.texts = TextsResource.SearchText({ query: $scope.search.query, page: page, pageSize: 10 },
+            function (response) {
+                console.log("texts loaded");
+            },
+            function (response) {
+                console.log(response);
+            });
+    };
+    $scope.More = function() {
+        page++;
+        var textsTemp;
+        textsTemp = TextsResource.GetTexts({ page: page, pageSize: 10 },
+            function (response) {
+                console.log("temp texts loaded");
+                $scope.texts = $scope.texts.concat(textsTemp);
+            },
+            function () {
+                console.log("error");
+            });
+
+    };
     $scope.GetTextsForAdmin = function () {
-        $scope.texts = TextsResource.TextsForAdmin({ page: 0, pageSize: 10 },
+        $scope.texts = TextsResource.TextsForAdmin(
             function (response) {
                 console.log("texts loaded");
             },

@@ -3,5 +3,37 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<section ng-controller="TextsController">
+    <nav class="archive-nav">
+        <form ng-submit="SearchText()">
+            <input type="text" ng-model="search.query"/>
+            <input type="submit" value="Suchen"/>
+        </form>
+        <div class="buttongroup">
+            <label>Jahr: </label>
+            <select ng-options="y as y for y in yearsSinceRelease" ng-model="year" ng-change="SetYear(year)"></select>
+            <label>Monat: </label>
+            <button ng-click="GetTextsByMonth(1)">Januar</button>
+            <button ng-click="GetTextsByMonth(2)">Februar</button>
+            <button ng-click="GetTextsByMonth(3)">März</button>
+            <button ng-click="GetTextsByMonth(4)">April</button>
+            <button ng-click="GetTextsByMonth(5)">Mai</button>
+            <button ng-click="GetTextsByMonth(6)">Juni</button>
+            <button ng-click="GetTextsByMonth(7)">Juli</button>
+            <button ng-click="GetTextsByMonth(8)">August</button>
+            <button ng-click="GetTextsByMonth(9)">September</button>
+            <button ng-click="GetTextsByMonth(10)">Oktober</button>
+            <button ng-click="GetTextsByMonth(11)">November</button>
+            <button ng-click="GetTextsByMonth(12)">Dezember</button>
+        </div>
+    </nav>
+    <article class="preview" ng-repeat="t in texts track by t.TextId">
+        <h2>{{t.TextTitle}}</h2>
+        <p ng-bind-html="(t.TextContent | limitTo: 300) + '...'"></p>
+        <a href='/Text/Read/{{t.TextId}}'>Lesen</a>
+    </article>
+    <article class="preview">
+        <button ng-click="More()">Mehr Texte</button>
+    </article>
+</section>
 

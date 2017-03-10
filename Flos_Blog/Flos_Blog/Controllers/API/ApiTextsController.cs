@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -21,9 +19,53 @@ namespace Flos_Blog.Controllers.API
         public async Task<IHttpActionResult> GetTexts(int pageSize, int page)
         {
             var texts = await _db.Texts
+                .Where(p => p.TextPublished)
                 .OrderByDescending(d => d.TextDate)
+                .Skip(pageSize*page)
                 .Take(pageSize)
-                .Skip(pageSize * page)
+                .ToListAsync();
+
+            var textsViewModel = new List<TextUserViewModel>();
+
+            textsViewModel.AddRange(texts.Select(t => new TextUserViewModel
+            {
+                TextId = t.TextId,
+                TextContent = t.TextContent,
+                TextDate = t.TextDate,
+                TextTitle = t.TextTitle
+            }));
+
+            return Ok(textsViewModel);
+        }
+
+        public async Task<IHttpActionResult> GetTextsByMonth(int month, int year)
+        {
+            var texts = await _db.Texts
+                .Where(p => p.TextPublished && p.TextDate.Month == month && p.TextDate.Year == year)
+                .OrderByDescending(d => d.TextDate)
+                .ToListAsync();
+
+            var textsViewModel = new List<TextUserViewModel>();
+
+            textsViewModel.AddRange(texts.Select(t => new TextUserViewModel
+            {
+                TextId = t.TextId,
+                TextContent = t.TextContent,
+                TextDate = t.TextDate,
+                TextTitle = t.TextTitle
+            }));
+
+            return Ok(textsViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> SearchText(string query, int page, int pageSize)
+        {
+            var texts = await _db.Texts
+                .Where(p => p.TextPublished && (p.TextTitle.Contains(query) || p.TextContent.Contains(query)))
+                .OrderByDescending(d => d.TextDate)
+                .Skip(page * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             var textsViewModel = new List<TextUserViewModel>();
@@ -41,12 +83,10 @@ namespace Flos_Blog.Controllers.API
 
         [Authorize]
         [HttpGet]
-        public async Task<IHttpActionResult> TextsForAdmin(int pageSize, int page)
+        public async Task<IHttpActionResult> TextsForAdmin()
         {
             var texts = await _db.Texts
-                .OrderBy(d => d.TextDate)
-                .Take(pageSize)
-                .Skip(pageSize * page)
+                .OrderByDescending(d => d.TextDate)
                 .ToListAsync();
 
             var textsViewModel = new List<TextAdminViewModel>();
@@ -57,10 +97,11 @@ namespace Flos_Blog.Controllers.API
                 TextContent = t.TextContent,
                 TextDate = t.TextDate,
                 TextTitle = t.TextTitle,
-                TextShared = t.TextShared,
+                TextShares = t.TextShares,
                 TextViews = t.TextViews,
-                TextStayDuration = GetAverageTextStayDuration(t.TextId)
-        }));
+                TextStayDuration = GetAverageTextStayDuration(t.TextId),
+                TextPublished = t.TextPublished
+            }));
 
             return Ok(textsViewModel);
         }
@@ -69,13 +110,13 @@ namespace Flos_Blog.Controllers.API
         [ResponseType(typeof(Text))]
         public async Task<IHttpActionResult> GetText(Guid id)
         {
-            Text text = await _db.Texts.FindAsync(id);
+            var text = await _db.Texts.FindAsync(id);
             if (text == null)
             {
                 return NotFound();
             }
 
-            await AddView(id);           
+            await AddView(id);
 
             return Ok(text);
         }
@@ -96,7 +137,6 @@ namespace Flos_Blog.Controllers.API
             {
                 if (!TextExists(id))
                 {
-                    return;
                 }
                 else
                 {
@@ -108,13 +148,13 @@ namespace Flos_Blog.Controllers.API
         [HttpPost]
         public async Task<IHttpActionResult> TextShared(TextSharedViewModel model)
         {
-            Text text = await _db.Texts.FindAsync(model.id);
+            var text = await _db.Texts.FindAsync(model.id);
             if (text == null)
             {
                 return NotFound();
             }
 
-            text.TextShared += 1;
+            text.TextShares += 1;
 
             _db.Entry(text).State = EntityState.Modified;
 
@@ -128,10 +168,7 @@ namespace Flos_Blog.Controllers.API
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return Ok();
@@ -140,13 +177,13 @@ namespace Flos_Blog.Controllers.API
         [HttpPost]
         public async Task SaveTextStayDuration(PageStayViewModel model)
         {
-            Text text = await _db.Texts.FindAsync(model.id);
+            var text = await _db.Texts.FindAsync(model.id);
             if (text == null)
             {
                 return;
             }
 
-            TextStayDuration stayDuration = new TextStayDuration
+            var stayDuration = new TextStayDuration
             {
                 StayDurationId = Guid.NewGuid(),
                 Duration = model.duration,
@@ -163,7 +200,6 @@ namespace Flos_Blog.Controllers.API
             {
                 if (!TextExists(model.id))
                 {
-                    return;
                 }
                 else
                 {
@@ -179,9 +215,9 @@ namespace Flos_Blog.Controllers.API
             if (_db.TextStayDurations.Any(i => i.Text.TextId == id))
             {
                 average = _db.TextStayDurations
-                .Include(t => t.Text)
-                .Where(t => t.Text.TextId == id)
-                .Average(i => i.Duration);
+                    .Include(t => t.Text)
+                    .Where(t => t.Text.TextId == id)
+                    .Average(i => i.Duration);
             }
 
             return average;
@@ -214,10 +250,7 @@ namespace Flos_Blog.Controllers.API
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -235,6 +268,7 @@ namespace Flos_Blog.Controllers.API
 
             text.TextId = Guid.NewGuid();
             text.TextDate = DateTime.Now;
+            text.TextPublished = false;
 
             _db.Texts.Add(text);
 
@@ -248,13 +282,40 @@ namespace Flos_Blog.Controllers.API
                 {
                     return Conflict();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = text.TextId }, text);
+            return CreatedAtRoute("DefaultApi", new {id = text.TextId}, text);
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IHttpActionResult> PublishText(Guid id, TextAdminViewModel model)
+        {
+            var text = await _db.Texts.FirstOrDefaultAsync(i => i.TextId == id);
+
+            text.TextPublished = true;
+
+            if (id != text.TextId)
+            {
+                return BadRequest();
+            }
+
+            _db.Entry(text).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TextExists(id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: api/ApiTexts/5
@@ -262,12 +323,13 @@ namespace Flos_Blog.Controllers.API
         [ResponseType(typeof(Text))]
         public async Task<IHttpActionResult> DeleteText(Guid id)
         {
-            Text text = await _db.Texts.FindAsync(id);
+            var text = await _db.Texts.FindAsync(id);
             if (text == null)
             {
                 return NotFound();
             }
-
+            var textStayDurations = _db.TextStayDurations.Where(t => t.Text.TextId == id);
+            _db.TextStayDurations.RemoveRange(textStayDurations);
             _db.Texts.Remove(text);
             await _db.SaveChangesAsync();
 

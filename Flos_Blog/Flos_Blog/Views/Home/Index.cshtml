@@ -1,8 +1,10 @@
 ﻿<section ng-controller="TextsController" ng-init="GetTexts()">
     <article class="preview" ng-repeat="t in texts track by t.TextId">
         <h2>{{t.TextTitle}}</h2>
-        <p>
-            {{t.TextContent | htmlToPlaintext | limitTo: 300}}... <a href='/Text/Read/{{t.TextId}}'>Lesen</a>
-        </p>
+        <p ng-bind-html="(t.TextContent | limitTo: 300) + '...'"></p>
+        <a href='/Text/Read/{{t.TextId}}'>Lesen</a>
+    </article>
+    <article class="preview">
+        <button ng-click="More()">Mehr Texte</button>
     </article>
 </section>

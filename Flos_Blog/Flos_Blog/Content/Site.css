@@ -58,8 +58,28 @@ nav ul li:hover {
     color: rgb(68, 68, 68);
 }
 
-.nav-active {
-    border-bottom: 0.25em solid white;
+.archive-nav {
+    position: relative;
+    padding: 1em;
+    background-color: #BFAFA6;
+}
+
+.archive-nav form input {
+    display: inline-block;
+}
+
+.buttongroup {
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: column;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    display: -webkit-box;
+    display: flex;
+}
+
+.buttongroup button, .buttongroup select {
+    margin: 0.1em;
 }
 
 main {
@@ -106,16 +126,22 @@ input {
     margin-bottom: 1em;
 }
 
-input[type=submit] {
+select {
+    padding: 0.75em;
+    margin-bottom: 1em;
+}
+
+input[type=submit], button {
     -ms-border-radius: 3px;
     border-radius: 3px;
     background-color: #6E6A6F;
     color: white;
     border: none;
     cursor: pointer;
+    padding: 0.75em;
 }
 
-input[type=submit]:hover {
+input[type=submit]:hover, button:hover {
     -ms-opacity: 0.8;
     opacity: 0.8;
 }

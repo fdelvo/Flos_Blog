@@ -6,7 +6,7 @@
 <section ng-controller="TextsController" ng-init="GetText(); MeasureStayOnPage()">
     <article class="text">
         <h2>{{text.TextTitle}}</h2>
-        <div ng-bind-html="text.TextContent"></div>
+        <div ng-bind-html="text.TextContent | html"></div>
         <footer>
             <!-- AddToAny BEGIN -->
             <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
