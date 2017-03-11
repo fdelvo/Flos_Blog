@@ -1097,6 +1097,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\LogIn.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\floserzaehlungen1 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703071315229_initial.resx">
