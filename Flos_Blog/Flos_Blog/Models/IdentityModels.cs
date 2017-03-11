@@ -24,6 +24,7 @@ namespace Flos_Blog.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<ApplicationDbContext>());
         }
         
         public static ApplicationDbContext Create()

@@ -70,6 +70,7 @@ function TextsController($scope, $rootScope, TextsResource) {
     };
     $scope.GetTexts = function () {
         page = 0;
+        $scope.texts = [];
         $scope.texts = TextsResource.GetTexts( { page: page, pageSize: 10 },
             function(response) {
                 console.log("texts loaded");
