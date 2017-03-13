@@ -260,7 +260,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\PageStayDuration.cs" />
+    <Compile Include="Models\StayDuration.cs" />
     <Compile Include="Models\Text.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

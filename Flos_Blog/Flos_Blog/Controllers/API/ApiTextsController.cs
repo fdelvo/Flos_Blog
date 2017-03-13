@@ -175,7 +175,7 @@ namespace Flos_Blog.Controllers.API
         }
 
         [HttpPost]
-        public async Task SaveTextStayDuration(PageStayViewModel model)
+        public async Task SaveTextStayDuration(TextStayViewModel model)
         {
             var text = await _db.Texts.FindAsync(model.id);
             if (text == null)

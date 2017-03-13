@@ -14,7 +14,7 @@ function TextsController($scope, $rootScope, TextsResource) {
     $scope.year = new Date().getFullYear();
     $scope.yearsSinceRelease = getYearsSinceRelease();
     function getYearsSinceRelease() {
-        const releaseYear = 2000;
+        const releaseYear = 2017;
         const currentYear = new Date().getFullYear();
         const years = [releaseYear];
         if (currentYear - releaseYear !== 0) {
@@ -137,8 +137,8 @@ function TextsController($scope, $rootScope, TextsResource) {
             $scope.newStay.duration = Math.abs(Date.now() - start);
             $scope.newStay.$SaveTextStayDuration(function(response) {
                 console.log("stay duration saved");
-            }, function() {
-                console.log("error");
+            }, function(response) {
+                console.log(response);
             });
         });
         

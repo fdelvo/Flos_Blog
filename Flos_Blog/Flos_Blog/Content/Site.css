@@ -189,3 +189,25 @@ table thead {
         max-width: initial;
     }
 }
+
+@media print {
+    nav {
+        display: none;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+
+    header {
+        display: none;
+    }
+
+    article {
+        border: none;
+    }
+}

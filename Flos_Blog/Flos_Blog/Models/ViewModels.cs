@@ -30,9 +30,15 @@ namespace Flos_Blog.Models
         public Guid id { get; set; }
     }
 
-    public class PageStayViewModel
+    public class TextStayViewModel
     {
         public Guid id { get; set; }
+        public int duration { get; set; }
+    }
+
+    public class PageStayViewModel
+    {
+        public string link { get; set; }
         public int duration { get; set; }
     }
 }
