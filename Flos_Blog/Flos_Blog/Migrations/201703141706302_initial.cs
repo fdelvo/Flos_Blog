@@ -8,6 +8,17 @@ namespace Flos_Blog.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.PageVisits",
+                c => new
+                    {
+                        PageVisitId = c.Guid(nullable: false),
+                        Link = c.String(),
+                        Clicks = c.Int(nullable: false),
+                        TimeSpentOnPage = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.PageVisitId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -38,8 +49,23 @@ namespace Flos_Blog.Migrations
                         TextTitle = c.String(),
                         TextContent = c.String(),
                         TextDate = c.DateTime(nullable: false),
+                        TextViews = c.Int(nullable: false),
+                        TextShares = c.Int(nullable: false),
+                        TextPublished = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.TextId);
+            
+            CreateTable(
+                "dbo.TextStayDurations",
+                c => new
+                    {
+                        TextStayDurationId = c.Guid(nullable: false),
+                        Duration = c.Int(nullable: false),
+                        Text_TextId = c.Guid(),
+                    })
+                .PrimaryKey(t => t.TextStayDurationId)
+                .ForeignKey("dbo.Texts", t => t.Text_TextId)
+                .Index(t => t.Text_TextId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -93,19 +119,23 @@ namespace Flos_Blog.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.TextStayDurations", "Text_TextId", "dbo.Texts");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.TextStayDurations", new[] { "Text_TextId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.TextStayDurations");
             DropTable("dbo.Texts");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.PageVisits");
         }
     }
 }

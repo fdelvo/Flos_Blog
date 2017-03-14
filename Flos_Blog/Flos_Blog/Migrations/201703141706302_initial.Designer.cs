@@ -7,13 +7,13 @@ namespace Flos_Blog.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class text_publish : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(text_publish));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703101408468_text_publish"; }
+            get { return "201703141706302_initial"; }
         }
         
         string IMigrationMetadata.Source

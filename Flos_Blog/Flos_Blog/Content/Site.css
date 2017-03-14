@@ -184,6 +184,14 @@ table thead {
     font-weight: 800;
 }
 
+footer {
+    border-top: 0.1rem solid lightgrey;
+}
+
+footer button {
+    margin-bottom: 1em;
+}
+
 @media (min-width: 1024px) {
     .admin article {
         max-width: initial;

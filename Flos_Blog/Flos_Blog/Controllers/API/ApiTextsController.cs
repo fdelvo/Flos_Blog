@@ -148,7 +148,7 @@ namespace Flos_Blog.Controllers.API
         [HttpPost]
         public async Task<IHttpActionResult> TextShared(TextSharedViewModel model)
         {
-            var text = await _db.Texts.FindAsync(model.id);
+            var text = await _db.Texts.FindAsync(model.Id);
             if (text == null)
             {
                 return NotFound();
@@ -164,7 +164,7 @@ namespace Flos_Blog.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TextExists(model.id))
+                if (!TextExists(model.Id))
                 {
                     return NotFound();
                 }
@@ -177,7 +177,7 @@ namespace Flos_Blog.Controllers.API
         [HttpPost]
         public async Task SaveTextStayDuration(TextStayViewModel model)
         {
-            var text = await _db.Texts.FindAsync(model.id);
+            var text = await _db.Texts.FindAsync(model.Id);
             if (text == null)
             {
                 return;
@@ -185,12 +185,12 @@ namespace Flos_Blog.Controllers.API
 
             var stayDuration = new TextStayDuration
             {
-                StayDurationId = Guid.NewGuid(),
-                Duration = model.duration,
+                TextStayDurationId = Guid.NewGuid(),
+                Duration = model.Duration,
                 Text = text
             };
 
-            _db.StayDurations.Add(stayDuration);
+            _db.TextStays.Add(stayDuration);
 
             try
             {
@@ -198,7 +198,7 @@ namespace Flos_Blog.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TextExists(model.id))
+                if (!TextExists(model.Id))
                 {
                 }
                 else
@@ -212,9 +212,9 @@ namespace Flos_Blog.Controllers.API
         {
             var average = 0.0;
 
-            if (_db.TextStayDurations.Any(i => i.Text.TextId == id))
+            if (_db.TextStays.Any(i => i.Text.TextId == id))
             {
-                average = _db.TextStayDurations
+                average = _db.TextStays
                     .Include(t => t.Text)
                     .Where(t => t.Text.TextId == id)
                     .Average(i => i.Duration);
@@ -328,8 +328,8 @@ namespace Flos_Blog.Controllers.API
             {
                 return NotFound();
             }
-            var textStayDurations = _db.TextStayDurations.Where(t => t.Text.TextId == id);
-            _db.TextStayDurations.RemoveRange(textStayDurations);
+            var textStayDurations = _db.TextStays.Where(t => t.Text.TextId == id);
+            _db.TextStays.RemoveRange(textStayDurations);
             _db.Texts.Remove(text);
             await _db.SaveChangesAsync();
 

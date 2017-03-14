@@ -15,7 +15,9 @@ namespace Flos_Blog
                         "~/Scripts/tinymce.min.js",
                         "~/Scripts/FlosBlogApp.js",
                         "~/Scripts/AngularResources/TextsResource.js",
+                        "~/Scripts/AngularResources/AnalyticsResource.js",
                         "~/Scripts/AngularControllers/LoginController.js",
+                        "~/Scripts/AngularControllers/AnalyticsController.js",
                         "~/Scripts/AngularControllers/TextsController.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

@@ -27,18 +27,28 @@ namespace Flos_Blog.Models
 
     public class TextSharedViewModel
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 
     public class TextStayViewModel
     {
-        public Guid id { get; set; }
-        public int duration { get; set; }
+        public Guid Id { get; set; }
+        public int Duration { get; set; }
     }
 
-    public class PageStayViewModel
+    public class PageVisitViewModel
     {
-        public string link { get; set; }
-        public int duration { get; set; }
+        public string Link { get; set; }
+        public int TimeSpentOnPage { get; set; }
+    }
+
+    public class PageVisitsViewModel
+    {
+        public int HomeVisits { get; set; }
+        public int ArchiveVisits { get; set; }
+        public int AboutVisits { get; set; }
+        public double TimeSpentOnHome { get; set; }
+        public double TimeSpentOnArchive { get; set; }
+        public double TimeSpentOnAbout { get; set; }
     }
 }

@@ -17,48 +17,83 @@
     <article>
         <table ng-init="GetTextsForAdmin()">
             <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Published</th>
-                    <th>Views</th>
-                    <th>Shares</th>
-                    <th>Aver. Stay</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Published</th>
+                <th>Views</th>
+                <th>Shares</th>
+                <th>Aver. Stay</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="t in texts track by t.TextId">
-                    <td>{{t.TextTitle}}</td>
-                    <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
-                    <td>{{t.TextPublished}}</td>
-                    <td>{{t.TextViews}}</td>
-                    <td>{{t.TextShares}}</td>
-                    <td>{{t.TextStayDuration / 60000 | limitTo: 4}}</td>
-                    <td>
-                        <!-- AddToAny BEGIN -->
-                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="http://floserzaehlungen.blog/" data-a2a-title="{{t.TextTitle}}">
-                            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                            <a class="a2a_button_facebook"></a>
-                            <a class="a2a_button_twitter"></a>
-                        </div>
-                        <script>
-                            var a2a_config = a2a_config || {};
-                            a2a_config.locale = "de";
-                            a2a_config.templates = {
-                                twitter: "Neue Erzählung '${title}' auf: ${link}"
-                            };
-                        </script>
-                        <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        <!-- AddToAny END -->
-                    </td>
-                    <td><a href="" ng-click="PublishText(t.TextId, t)">Publish</a></td>
-                    <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
-                    <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
-                </tr>
+            <tr ng-repeat="t in texts track by t.TextId">
+                <td>{{t.TextTitle}}</td>
+                <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
+                <td>{{t.TextPublished}}</td>
+                <td>{{t.TextViews}}</td>
+                <td>{{t.TextShares}}</td>
+                <td>{{t.TextStayDuration / 60000 | limitTo: 4}}</td>
+                <td>
+                    <!-- AddToAny BEGIN -->
+                    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="http://floserzaehlungen.blog/" data-a2a-title="{{t.TextTitle}}">
+                        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                    </div>
+                    <script>
+                        var a2a_config = a2a_config || {};
+                        a2a_config.locale = "de";
+                        a2a_config.templates = {
+                            twitter: "Neue Erzählung '${title}' auf: ${link}"
+                        };
+                    </script>
+                    <script async src="https://static.addtoany.com/menu/page.js"></script>
+                    <!-- AddToAny END -->
+                </td>
+                <td><a href="" ng-click="PublishText(t.TextId, t)">Publish</a></td>
+                <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
+                <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+</section>
+<section class="admin" ng-controller="AnalyticsController">
+    <article>
+        <table ng-init="GetPageVisits()">
+            <thead>
+            <tr>
+                <th>Page</th>
+                <th>Visits</th>
+                <th>Avr. Time Spent On Page</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Home</td>
+                <td>{{pageVisits.HomeVisits}}</td>
+                <td>{{pageVisits.TimeSpentOnHome / 60000 | limitTo: 4}}</td>
+            </tr>
+            <tr>
+                <td>Archive</td>
+                <td>{{pageVisits.ArchiveVisits}}</td>
+                <td>{{pageVisits.TimeSpentOnArchive / 60000 | limitTo: 4}}</td>
+            </tr>
+            <tr>
+                <td>About</td>
+                <td>{{pageVisits.AboutVisits}}</td>
+                <td>{{pageVisits.TimeSpentOnAbout / 60000 | limitTo: 4}}</td>
+            </tr>
+            <tr>
+                <td>Read</td>
+                <td>{{pageVisits.ReadVisits}}</td>
+                <td>{{pageVisits.TimeSpentOnRead / 60000 | limitTo: 4}}</td>
+            </tr>
             </tbody>
         </table>
     </article>

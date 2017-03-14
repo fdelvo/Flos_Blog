@@ -130,18 +130,17 @@ function TextsController($scope, $rootScope, TextsResource) {
             function() {
                 console.log("error");
             })};
-    $scope.MeasureStayOnPage = function() {
+    $scope.MeasureStayOnText = function() {
         var start = Date.now();
         window.addEventListener("beforeunload", function (e) {
-            $scope.newStay.id = getValueAtIndex(5);
-            $scope.newStay.duration = Math.abs(Date.now() - start);
+            $scope.newStay.Id = getValueAtIndex(5);
+            $scope.newStay.Duration = Math.abs(Date.now() - start);
             $scope.newStay.$SaveTextStayDuration(function(response) {
                 console.log("stay duration saved");
             }, function(response) {
                 console.log(response);
             });
-        });
-        
+        }); 
     };
     $scope.ShareText = function() {
         $scope.newShare.id = getValueAtIndex(5);
@@ -151,6 +150,12 @@ function TextsController($scope, $rootScope, TextsResource) {
             console.log("error");
         });
     }
+    $scope.PrintText = function() {
+        Window.print();
+    };
+    $scope.ScrollToBottom = function() {
+        window.scrollTo(0, document.body.scrollHeight);
+    };
     function getValueAtIndex (index) {
         const str = window.location.href;
         console.log(str.split("/")[index]);
