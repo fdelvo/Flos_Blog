@@ -151,7 +151,7 @@ function TextsController($scope, $rootScope, TextsResource) {
         });
     }
     $scope.PrintText = function() {
-        Window.print();
+        window.print();
     };
     $scope.ScrollToBottom = function() {
         window.scrollTo(0, document.body.scrollHeight);
