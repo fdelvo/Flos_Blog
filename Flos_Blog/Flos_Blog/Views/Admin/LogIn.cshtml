@@ -1,23 +1,21 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "LogIn";
 }
 
 <section ng-controller="LoginController">
     <form ng-submit="LogIn()">
         <label>Email</label>
-        <br />
-        <input type="text" ng-model="loginData.username" placeholder="Email" />
-        <br />
+        <br/>
+        <input type="text" ng-model="loginData.username" placeholder="Email"/>
+        <br/>
         <label>Password</label>
-        <br />
-        <input type="password" ng-model="loginData.password" placeholder="Password" />
-        <br />
+        <br/>
+        <input type="password" ng-model="loginData.password" placeholder="Password"/>
+        <br/>
         <ul ng-show="error" class="error-ul">
             <li>{{loginStatus}}</li>
         </ul>
-        <br />
-        <input type="submit" value="Log In" />
+        <br/>
+        <input type="submit" value="Log In"/>
     </form>
 </section>
-

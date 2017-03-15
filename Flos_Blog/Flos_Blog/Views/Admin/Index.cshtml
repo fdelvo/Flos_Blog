@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -55,9 +54,15 @@
                     <script async src="https://static.addtoany.com/menu/page.js"></script>
                     <!-- AddToAny END -->
                 </td>
-                <td><a href="" ng-click="PublishText(t.TextId, t)">Publish</a></td>
-                <td><a href="/Admin/Edit/{{t.TextId}}">Edit</a></td>
-                <td><a href="" ng-click="DeleteText(t.TextId)">Delete</a></td>
+                <td>
+                    <a href="" ng-click="PublishText(t.TextId, t)">Publish</a>
+                </td>
+                <td>
+                    <a href="/Admin/Edit/{{t.TextId}}">Edit</a>
+                </td>
+                <td>
+                    <a href="" ng-click="DeleteText(t.TextId)">Delete</a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -98,4 +103,3 @@
         </table>
     </article>
 </section>
-

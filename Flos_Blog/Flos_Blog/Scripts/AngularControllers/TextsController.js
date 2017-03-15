@@ -13,12 +13,13 @@ function TextsController($scope, $rootScope, TextsResource) {
     var yearToSearchIn = new Date().getFullYear();
     $scope.year = new Date().getFullYear();
     $scope.yearsSinceRelease = getYearsSinceRelease();
+
     function getYearsSinceRelease() {
         const releaseYear = 2017;
         const currentYear = new Date().getFullYear();
         const years = [releaseYear];
         if (currentYear - releaseYear !== 0) {
-            for (var i = 1; i < (currentYear - releaseYear)+1; i++) {
+            for (let i = 1; i < (currentYear - releaseYear) + 1; i++) {
                 const yearToAdd = releaseYear + i;
                 years.push(yearToAdd);
             }
@@ -31,7 +32,7 @@ function TextsController($scope, $rootScope, TextsResource) {
     };
     $scope.CreateText = function() {
         $scope.newText.$PostText(
-            function(response) {                
+            function(response) {
                 $rootScope.status = "Text published.";
                 location.href = location.href;
             },
@@ -39,39 +40,41 @@ function TextsController($scope, $rootScope, TextsResource) {
                 $rootScope.status = response;
             });
     };
-    $scope.PublishText = function (id, t) {
+    $scope.PublishText = function(id, t) {
         $scope.textToPublish = t;
-        $scope.textToPublish.$PublishText({id: id}, 
+        $scope.textToPublish.$PublishText({ id: id },
             function(response) {
                 console.log("Text Published");
                 location.href = location.href;
-            }, function(response) {
+            },
+            function(response) {
                 $rootScope.status = response;
             });
-    }
+    };
     $scope.DeleteText = function(id) {
         TextsResource.DeleteText({ id: id },
-            function (response) {
+            function(response) {
                 $rootScope.status = "Text deleted.";
                 location.href = location.href;
             },
-            function (response) {
+            function(response) {
                 $rootScope.status = response;
             });
     };
     $scope.EditText = function() {
-        $scope.text.$PutText({ id: getValueAtIndex(5)},
+        $scope.text.$PutText({ id: getValueAtIndex(5) },
             function() {
-            $rootScope = "Text edited.";
-            location.href = location.href;
-        }, function(response) {
-            $rootScope = response;
-        });
+                $rootScope = "Text edited.";
+                location.href = location.href;
+            },
+            function(response) {
+                $rootScope = response;
+            });
     };
-    $scope.GetTexts = function () {
+    $scope.GetTexts = function() {
         page = 0;
         $scope.texts = [];
-        $scope.texts = TextsResource.GetTexts( { page: page, pageSize: 10 },
+        $scope.texts = TextsResource.GetTexts({ page: page, pageSize: 10 },
             function(response) {
                 console.log("texts loaded");
             },
@@ -79,24 +82,24 @@ function TextsController($scope, $rootScope, TextsResource) {
                 console.log("error");
             });
     };
-    $scope.GetTextsByMonth = function (month) {
+    $scope.GetTextsByMonth = function(month) {
         $scope.texts = [];
         $scope.texts = TextsResource.GetTextsByMonth({ month: month, year: yearToSearchIn },
-            function (response) {
+            function(response) {
                 console.log("texts loaded");
             },
-            function () {
+            function() {
                 console.log("error");
             });
     };
-    $scope.SearchText = function () {
+    $scope.SearchText = function() {
         page = 0;
         $scope.texts = [];
         $scope.texts = TextsResource.SearchText({ query: $scope.search.query, page: page, pageSize: 10 },
-            function (response) {
+            function(response) {
                 console.log("texts loaded");
             },
-            function (response) {
+            function(response) {
                 console.log(response);
             });
     };
@@ -104,59 +107,64 @@ function TextsController($scope, $rootScope, TextsResource) {
         page++;
         var textsTemp;
         textsTemp = TextsResource.GetTexts({ page: page, pageSize: 10 },
-            function (response) {
+            function(response) {
                 console.log("temp texts loaded");
                 $scope.texts = $scope.texts.concat(textsTemp);
             },
-            function () {
+            function() {
                 console.log("error");
             });
 
     };
-    $scope.GetTextsForAdmin = function () {
+    $scope.GetTextsForAdmin = function() {
         $scope.texts = TextsResource.TextsForAdmin(
-            function (response) {
+            function(response) {
                 console.log("texts loaded");
             },
-            function () {
+            function() {
                 $rootScope.status = response;
             });
     };
     $scope.GetText = function() {
-        $scope.text = TextsResource.GetText( { id: getValueAtIndex(5)},
+        $scope.text = TextsResource.GetText({ id: getValueAtIndex(5) },
             function(response) {
                 console.log("text loaded");
             },
             function() {
                 console.log("error");
-            })};
+            })
+    };
     $scope.MeasureStayOnText = function() {
         var start = Date.now();
-        window.addEventListener("beforeunload", function (e) {
-            $scope.newStay.Id = getValueAtIndex(5);
-            $scope.newStay.Duration = Math.abs(Date.now() - start);
-            $scope.newStay.$SaveTextStayDuration(function(response) {
-                console.log("stay duration saved");
-            }, function(response) {
-                console.log(response);
+        window.addEventListener("beforeunload",
+            function(e) {
+                $scope.newStay.Id = getValueAtIndex(5);
+                $scope.newStay.Duration = Math.abs(Date.now() - start);
+                $scope.newStay.$SaveTextStayDuration(function(response) {
+                        console.log("stay duration saved");
+                    },
+                    function(response) {
+                        console.log(response);
+                    });
             });
-        }); 
     };
     $scope.ShareText = function() {
         $scope.newShare.id = getValueAtIndex(5);
         $scope.newShare.$TextShared(function(response) {
-            console.log("text shared");
-        }, function() {
-            console.log("error");
-        });
-    }
+                console.log("text shared");
+            },
+            function() {
+                console.log("error");
+            });
+    };
     $scope.PrintText = function() {
         window.print();
     };
     $scope.ScrollToBottom = function() {
         window.scrollTo(0, document.body.scrollHeight);
     };
-    function getValueAtIndex (index) {
+
+    function getValueAtIndex(index) {
         const str = window.location.href;
         console.log(str.split("/")[index]);
         return str.split("/")[index];
