@@ -33,7 +33,7 @@
             <tr ng-repeat="t in texts track by t.TextId">
                 <td>{{t.TextTitle}}</td>
                 <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
-                <td>{{t.TextPublished}}</td>
+                <td>{{t.TextPublished ? t.TextPublishDate : "n/a" | date: "dd/MM/yyyy @@ HH:mm"}}</td>
                 <td>{{t.TextViews}}</td>
                 <td>{{t.TextShares}}</td>
                 <td>{{t.TextStayDuration / 60000 | limitTo: 4}}</td>

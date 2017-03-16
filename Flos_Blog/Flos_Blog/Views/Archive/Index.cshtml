@@ -28,9 +28,10 @@
         </div>
     </nav>
     <article class="preview" ng-repeat="t in texts track by t.TextId">
-        <h2>{{t.TextTitle}}</h2><span>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</span>
+        <p ng-if="!texts.length">No texts found</p>
+        <h2>{{t.TextTitle}}</h2><span>{{t.TextPublishDate | date: "dd/MM/yyyy @@ HH:mm"}}</span>
         <p ng-bind-html="(t.TextContent | limitTo: 500) + '...'"></p>
-        <a href="/Text/Read/{{t.TextId}}">Lesen</a> 
+        <a href="/Text/Read/{{t.TextId}}">Lesen</a>
     </article>
     <article class="preview">
         <button ng-click="More()">Mehr Texte</button>

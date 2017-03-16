@@ -20,7 +20,7 @@ namespace Flos_Blog.Controllers.API
         {
             var texts = await _db.Texts
                 .Where(p => p.TextPublished)
-                .OrderByDescending(d => d.TextDate)
+                .OrderByDescending(d => d.TextPublishDate)
                 .Skip(pageSize*page)
                 .Take(pageSize)
                 .ToListAsync();
@@ -42,7 +42,7 @@ namespace Flos_Blog.Controllers.API
         {
             var texts = await _db.Texts
                 .Where(p => p.TextPublished && p.TextDate.Month == month && p.TextDate.Year == year)
-                .OrderByDescending(d => d.TextDate)
+                .OrderByDescending(d => d.TextPublishDate)
                 .ToListAsync();
 
             var textsViewModel = new List<TextUserViewModel>();
@@ -63,7 +63,7 @@ namespace Flos_Blog.Controllers.API
         {
             var texts = await _db.Texts
                 .Where(p => p.TextPublished && (p.TextTitle.Contains(query) || p.TextContent.Contains(query)))
-                .OrderByDescending(d => d.TextDate)
+                .OrderByDescending(d => d.TextPublishDate)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -86,7 +86,7 @@ namespace Flos_Blog.Controllers.API
         public async Task<IHttpActionResult> TextsForAdmin()
         {
             var texts = await _db.Texts
-                .OrderByDescending(d => d.TextDate)
+                .OrderByDescending(d => d.TextPublishDate)
                 .ToListAsync();
 
             var textsViewModel = new List<TextAdminViewModel>();
@@ -271,6 +271,7 @@ namespace Flos_Blog.Controllers.API
             text.TextId = Guid.NewGuid();
             text.TextDate = DateTime.Now;
             text.TextPublished = false;
+            text.TextPublishDate = DateTime.Now;
 
             _db.Texts.Add(text);
 
@@ -296,7 +297,13 @@ namespace Flos_Blog.Controllers.API
         {
             var text = await _db.Texts.FirstOrDefaultAsync(i => i.TextId == id);
 
+            if (text.TextPublished)
+            {
+                return BadRequest("Text already published");
+            }
+
             text.TextPublished = true;
+            text.TextPublishDate = DateTime.Now;
 
             if (id != text.TextId)
             {
