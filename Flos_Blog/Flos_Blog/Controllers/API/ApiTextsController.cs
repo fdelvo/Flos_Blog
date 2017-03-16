@@ -175,12 +175,12 @@ namespace Flos_Blog.Controllers.API
         }
 
         [HttpPost]
-        public async Task SaveTextStayDuration(TextStayViewModel model)
+        public async Task<IHttpActionResult> SaveTextStayDuration(TextStayViewModel model)
         {
             var text = await _db.Texts.FindAsync(model.Id);
             if (text == null)
             {
-                return;
+                return NotFound();
             }
 
             var stayDuration = new TextStayDuration
@@ -206,6 +206,8 @@ namespace Flos_Blog.Controllers.API
                     throw;
                 }
             }
+
+            return Ok();
         }
 
         public double GetAverageTextStayDuration(Guid id)

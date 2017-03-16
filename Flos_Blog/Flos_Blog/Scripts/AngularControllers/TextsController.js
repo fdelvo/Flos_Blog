@@ -33,7 +33,7 @@ function TextsController($scope, $rootScope, TextsResource) {
     $scope.CreateText = function() {
         $scope.newText.$PostText(
             function(response) {
-                $rootScope.status = "Text published.";
+                $rootScope.status = "Text saved.";
                 location.href = location.href;
             },
             function(response) {
@@ -65,7 +65,7 @@ function TextsController($scope, $rootScope, TextsResource) {
         $scope.text.$PutText({ id: getValueAtIndex(5) },
             function() {
                 $rootScope = "Text edited.";
-                location.href = location.href;
+                location.href = "/admin";
             },
             function(response) {
                 $rootScope = response;
@@ -84,6 +84,9 @@ function TextsController($scope, $rootScope, TextsResource) {
     };
     $scope.GetTextsByMonth = function(month) {
         $scope.texts = [];
+        if (month === 0)
+            month = new Date().getMonth() + 1;
+
         $scope.texts = TextsResource.GetTextsByMonth({ month: month, year: yearToSearchIn },
             function(response) {
                 console.log("texts loaded");
@@ -103,6 +106,16 @@ function TextsController($scope, $rootScope, TextsResource) {
                 console.log(response);
             });
     };
+    $scope.ResetSearch = function () {
+        $scope.texts = [];
+        $scope.texts = TextsResource.GetTextsByMonth({ month: new Date().getMonth() + 1, year: new Date().getFullYear() },
+            function (response) {
+                console.log("texts loaded");
+            },
+            function () {
+                console.log("error");
+            });
+    }
     $scope.More = function() {
         page++;
         var textsTemp;

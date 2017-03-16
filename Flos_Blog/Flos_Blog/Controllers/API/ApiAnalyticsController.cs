@@ -37,7 +37,7 @@ namespace Flos_Blog.Controllers.API
         }
 
         [HttpPut]
-        public async Task SavePageVisit(PageVisitViewModel model)
+        public async Task<IHttpActionResult> SavePageVisit(PageVisitViewModel model)
         {
             var domainIndex = 0;
             if (model.Link.Contains(".net"))
@@ -63,7 +63,7 @@ namespace Flos_Blog.Controllers.API
 
             if (page == null)
             {
-                return;
+                return NotFound();
             }
 
             page.Clicks += 1;
@@ -78,6 +78,8 @@ namespace Flos_Blog.Controllers.API
             catch (DbUpdateConcurrencyException)
             {
             }
+
+            return Ok();
         }
     }
 }

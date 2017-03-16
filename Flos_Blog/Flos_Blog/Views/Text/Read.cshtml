@@ -4,6 +4,7 @@
 <section ng-controller="TextsController" ng-init="GetText(); MeasureStayOnText()">
     <article class="text">
         <button ng-click="ScrollToBottom()">Text Herunterladen</button>
+        <br/>
         <h2>{{text.TextTitle}}</h2>
         <div ng-bind-html="text.TextContent | html"></div>
         <footer>

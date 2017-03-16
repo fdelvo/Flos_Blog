@@ -7,13 +7,19 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    display: inline-block;
+    margin-right: 0.5em;
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
 
 input,
 select,
 textarea { max-width: 280px; }
+
+pre { display: inline; }
 
 nav {
     background-color: #6C698D;
