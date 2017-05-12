@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
 }
 
-<section class="admin" ng-controller="TextsController">
+<section class="admin" ng-controller="TextsController" ng-init="GetTextsForAdmin()">
     <article>
         <form ng-submit="CreateText()">
             <label>Text Title</label>
@@ -13,8 +13,8 @@
             <p>{{status}}</p>
         </form>
     </article>
-    <article>
-        <table ng-init="GetTextsForAdmin()">
+    <article class="desktop">
+        <table>
             <thead>
             <tr>
                 <th>Title</th>
@@ -69,6 +69,47 @@
             </tr>
             </tbody>
         </table>
+    </article>
+    <article class="mobile">
+        <div ng-repeat="t in texts track by t.TextId">
+            <ul>
+                <li>Title: {{t.TextTitle}}</li>
+                <li>Date: {{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</li>
+                <li>Published: {{t.TextPublished ? t.TextPublishDate : "n/a" | date: "dd/MM/yyyy @@ HH:mm"}}</li>
+                <li>Views: {{t.TextViews}}</li>
+                <li>Shares: {{t.TextShares}}</li>
+                <li>Stay: {{t.TextStayDuration / 60000 | limitTo: 4}}</li>
+                <li>
+                    <!-- AddToAny BEGIN -->
+                    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="http://floserzaehlungen.blog/" data-a2a-title="{{t.TextTitle}}">
+                        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                    </div>
+                    <script>
+                        var a2a_config = a2a_config || {};
+                        a2a_config.locale = "de";
+                        a2a_config.templates = {
+                            twitter: "Neue Erzählung '${title}' auf: ${link}"
+                        };
+                    </script>
+                    <script async src="https://static.addtoany.com/menu/page.js"></script>
+                    <!-- AddToAny END -->
+                </li>
+                <li>
+                    <a href="" ng-click="PublishText(t.TextId, t)">Publish</a>
+                </li>
+                <li>
+                    <a href="" ng-click="RevokeText(t.TextId, t)">Revoke</a>
+                </li>
+                <li>
+                    <a href="/Admin/Edit/{{t.TextId}}">Edit</a>
+                </li>
+                <li>
+                    <a href="" ng-click="DeleteText(t.TextId)">Delete</a>
+                </li>
+            </ul>
+        </div>
     </article>
 </section>
 <section class="admin" ng-controller="AnalyticsController">

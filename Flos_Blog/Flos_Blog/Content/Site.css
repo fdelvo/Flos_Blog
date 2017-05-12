@@ -182,8 +182,23 @@ footer { border-top: 0.1rem solid lightgrey; }
 
 footer button { margin-bottom: 1em; }
 
+.desktop {
+    display: none !important;
+}
+
+.mobile {
+    display: block !important;
+}
+
 @media (min-width: 1024px) {
     .admin article { max-width: initial; }
+    .desktop {
+        display: block !important;
+    }
+
+    .mobile {
+        display: none !important;
+    }
 }
 
 @media print {
