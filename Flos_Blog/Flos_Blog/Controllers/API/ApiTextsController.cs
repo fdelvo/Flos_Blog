@@ -42,7 +42,7 @@ namespace Flos_Blog.Controllers.API
         public async Task<IHttpActionResult> GetTextsByMonth(int month, int year)
         {
             var texts = await _db.Texts
-                .Where(p => p.TextPublished && p.TextDate.Month == month && p.TextDate.Year == year)
+                .Where(p => p.TextPublished && p.TextPublishDate.Month == month && p.TextPublishDate.Year == year)
                 .OrderByDescending(d => d.TextPublishDate)
                 .ToListAsync();
 

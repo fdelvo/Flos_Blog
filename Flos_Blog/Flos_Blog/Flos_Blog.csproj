@@ -1101,6 +1101,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\LogIn.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\FlosBlog20170420013457 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\floserzaehlungen1 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\floserzaehlungen2 - Web Deploy.pubxml" />
   </ItemGroup>
