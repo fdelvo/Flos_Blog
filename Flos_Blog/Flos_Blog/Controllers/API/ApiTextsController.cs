@@ -31,6 +31,7 @@ namespace Flos_Blog.Controllers.API
             {
                 TextId = t.TextId,
                 TextContent = t.TextContent,
+                TextPublishDate = t.TextPublishDate,
                 TextDate = t.TextDate,
                 TextTitle = t.TextTitle
             }));
@@ -51,6 +52,7 @@ namespace Flos_Blog.Controllers.API
             {
                 TextId = t.TextId,
                 TextContent = t.TextContent,
+                TextPublishDate = t.TextPublishDate,
                 TextDate = t.TextDate,
                 TextTitle = t.TextTitle
             }));
@@ -74,6 +76,7 @@ namespace Flos_Blog.Controllers.API
             {
                 TextId = t.TextId,
                 TextContent = t.TextContent,
+                TextPublishDate = t.TextPublishDate,
                 TextDate = t.TextDate,
                 TextTitle = t.TextTitle
             }));
@@ -96,6 +99,7 @@ namespace Flos_Blog.Controllers.API
                 TextId = t.TextId,
                 TextContent = t.TextContent,
                 TextDate = t.TextDate,
+                TextPublishDate = t.TextPublishDate,
                 TextTitle = t.TextTitle,
                 TextShares = t.TextShares,
                 TextViews = t.TextViews,
@@ -304,6 +308,41 @@ namespace Flos_Blog.Controllers.API
 
             text.TextPublished = true;
             text.TextPublishDate = DateTime.Now;
+
+            if (id != text.TextId)
+            {
+                return BadRequest();
+            }
+
+            _db.Entry(text).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TextExists(id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IHttpActionResult> RevokeText(Guid id, TextAdminViewModel model)
+        {
+            var text = await _db.Texts.FirstOrDefaultAsync(i => i.TextId == id);
+
+            if (text == null)
+            {
+                return BadRequest("Text doesn't exist");
+            }
+
+            text.TextPublished = false;
 
             if (id != text.TextId)
             {

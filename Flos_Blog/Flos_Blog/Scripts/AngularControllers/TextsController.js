@@ -51,6 +51,17 @@ function TextsController($scope, $rootScope, TextsResource) {
                 $rootScope.status = response;
             });
     };
+    $scope.RevokeText = function (id, t) {
+        $scope.textToRevoke = t;
+        $scope.textToRevoke.$RevokeText({ id: id },
+            function (response) {
+                console.log("Text revoked");
+                location.href = location.href;
+            },
+            function (response) {
+                $rootScope.status = response;
+            });
+    };
     $scope.DeleteText = function(id) {
         TextsResource.DeleteText({ id: id },
             function(response) {

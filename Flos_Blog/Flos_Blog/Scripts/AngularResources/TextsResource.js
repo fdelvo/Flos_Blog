@@ -45,6 +45,11 @@ function TextsResource($resource) {
                 url: "/api/apitexts/publishtext",
                 headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
             },
+            RevokeText: {
+                method: "PUT",
+                url: "/api/apitexts/revoketext",
+                headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
+            },
             TextShared: {
                 method: "POST",
                 url: "/api/apitexts/textshared",
