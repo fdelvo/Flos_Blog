@@ -1,0 +1,66 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DnD_Deutschland</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+    <nav class="main-nav">
+        <ul class="main-nav-list">
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li>
+                <a asp-area="" asp-controller="Blog" asp-action="Index">D&D Informationen</a>
+                <ul class="main-nav-sublist">
+                    <li><a asp-area="" asp-controller="Blog" asp-action="Index">Was ist D&D?</a></li>
+                    <li><a asp-area="" asp-controller="Blog" asp-action="Requirements">Was brauche ich für D&D?</a></li>
+                    <li><a asp-area="" asp-controller="Blog" asp-action="Requirements">Wo kann ich D&D spielen?</a></li>
+                </ul>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Forum" asp-action="Index">Forum</a>
+                <ul class="main-nav-sublist">
+                    <li><a asp-area="" asp-controller="Forum" asp-action="CategoryA">Category A</a></li>
+                    <li><a asp-area="" asp-controller="Forum" asp-action="CategoryA">Category B</a></li>
+                    <li><a asp-area="" asp-controller="Forum" asp-action="CategoryA">Category C</a></li>
+                </ul>
+            </li>
+            <li><a asp-area="" asp-controller="Home" asp-action="About">Über</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a></li>
+        </ul>
+        @await Html.PartialAsync("_LoginPartial")
+    </nav>
+    <main>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2017 - DnD_Deutschland</p>
+        </footer>
+    </main>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
