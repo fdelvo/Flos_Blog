@@ -21,7 +21,7 @@ namespace Flos_Blog.Controllers.API
             var texts = await _db.Texts
                 .Where(p => p.TextPublished)
                 .OrderByDescending(d => d.TextPublishDate)
-                .Skip(pageSize*page)
+                .Skip(pageSize * page)
                 .Take(pageSize)
                 .ToListAsync();
 

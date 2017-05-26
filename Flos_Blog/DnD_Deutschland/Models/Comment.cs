@@ -9,8 +9,10 @@ namespace DnD_Deutschland.Models
     public class Comment
     {
         public Guid CommentId { get; set; }
+
         [Required]
         public string CommentContent { get; set; }
+
         public DateTime CommentDate { get; set; }
         public ApplicationUser CommentAuthor { get; set; }
         public virtual BlogEntry BlogEntryComment { get; set; }

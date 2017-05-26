@@ -51,14 +51,14 @@ function TextsController($scope, $rootScope, TextsResource) {
                 $rootScope.status = response;
             });
     };
-    $scope.RevokeText = function (id, t) {
+    $scope.RevokeText = function(id, t) {
         $scope.textToRevoke = t;
         $scope.textToRevoke.$RevokeText({ id: id },
-            function (response) {
+            function(response) {
                 console.log("Text revoked");
                 location.href = location.href;
             },
-            function (response) {
+            function(response) {
                 $rootScope.status = response;
             });
     };
@@ -117,13 +117,14 @@ function TextsController($scope, $rootScope, TextsResource) {
                 console.log(response);
             });
     };
-    $scope.ResetSearch = function () {
+    $scope.ResetSearch = function() {
         $scope.texts = [];
-        $scope.texts = TextsResource.GetTextsByMonth({ month: new Date().getMonth() + 1, year: new Date().getFullYear() },
-            function (response) {
+        $scope.texts = TextsResource.GetTextsByMonth(
+            { month: new Date().getMonth() + 1, year: new Date().getFullYear() },
+            function(response) {
                 console.log("texts loaded");
             },
-            function () {
+            function() {
                 console.log("error");
             });
     }

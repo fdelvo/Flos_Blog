@@ -14,11 +14,13 @@ namespace Flos_Blog.Controllers
         public ActionResult LogIn()
         {
             return View();
-        }            public
-            ActionResult Edit 
+        }
+
+        public
+            ActionResult Edit
             ()
-            {
-                return View();
-            }
+        {
+            return View();
         }
     }
+}

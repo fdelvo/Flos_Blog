@@ -2,14 +2,14 @@ namespace Flos_Blog.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class initial : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.PageVisits",
-                c => new
+                    "dbo.PageVisits",
+                    c => new
                     {
                         PageVisitId = c.Guid(nullable: false),
                         Link = c.String(),
@@ -17,33 +17,33 @@ namespace Flos_Blog.Migrations
                         TimeSpentOnPage = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.PageVisitId);
-            
+
             CreateTable(
-                "dbo.AspNetRoles",
-                c => new
+                    "dbo.AspNetRoles",
+                    c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
+
             CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
+                    "dbo.AspNetUserRoles",
+                    c => new
                     {
                         UserId = c.String(nullable: false, maxLength: 128),
                         RoleId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .PrimaryKey(t => new {t.UserId, t.RoleId})
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-            
+
             CreateTable(
-                "dbo.Texts",
-                c => new
+                    "dbo.Texts",
+                    c => new
                     {
                         TextId = c.Guid(nullable: false),
                         TextTitle = c.String(),
@@ -54,10 +54,10 @@ namespace Flos_Blog.Migrations
                         TextPublished = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.TextId);
-            
+
             CreateTable(
-                "dbo.TextStayDurations",
-                c => new
+                    "dbo.TextStayDurations",
+                    c => new
                     {
                         TextStayDurationId = c.Guid(nullable: false),
                         Duration = c.Int(nullable: false),
@@ -66,10 +66,10 @@ namespace Flos_Blog.Migrations
                 .PrimaryKey(t => t.TextStayDurationId)
                 .ForeignKey("dbo.Texts", t => t.Text_TextId)
                 .Index(t => t.Text_TextId);
-            
+
             CreateTable(
-                "dbo.AspNetUsers",
-                c => new
+                    "dbo.AspNetUsers",
+                    c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Email = c.String(maxLength: 256),
@@ -86,10 +86,10 @@ namespace Flos_Blog.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
-            
+
             CreateTable(
-                "dbo.AspNetUserClaims",
-                c => new
+                    "dbo.AspNetUserClaims",
+                    c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.String(nullable: false, maxLength: 128),
@@ -99,21 +99,20 @@ namespace Flos_Blog.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+
             CreateTable(
-                "dbo.AspNetUserLogins",
-                c => new
+                    "dbo.AspNetUserLogins",
+                    c => new
                     {
                         LoginProvider = c.String(nullable: false, maxLength: 128),
                         ProviderKey = c.String(nullable: false, maxLength: 128),
                         UserId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
+                .PrimaryKey(t => new {t.LoginProvider, t.ProviderKey, t.UserId})
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -121,12 +120,12 @@ namespace Flos_Blog.Migrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TextStayDurations", "Text_TextId", "dbo.Texts");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] {"UserId"});
+            DropIndex("dbo.AspNetUserClaims", new[] {"UserId"});
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.TextStayDurations", new[] { "Text_TextId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.TextStayDurations", new[] {"Text_TextId"});
+            DropIndex("dbo.AspNetUserRoles", new[] {"RoleId"});
+            DropIndex("dbo.AspNetUserRoles", new[] {"UserId"});
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
