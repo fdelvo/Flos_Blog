@@ -22,5 +22,13 @@ namespace DnD_Deutschland.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Entry> Entries { get; set; }
+        public DbSet<BlogEntry> BlogEntries { get; set; }
+        public DbSet<ForumEntry> ForumEntries { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<ForumCategory> ForumCategories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+
     }
 }
