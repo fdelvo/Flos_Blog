@@ -12,5 +12,25 @@ namespace DnD_Deutschland.Controllers
         {
             return View();
         }
+
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
+        public IActionResult Forum()
+        {
+            return View();
+        }
+
+        public IActionResult UserManagement()
+        {
+            return View();
+        }
+
+        public IActionResult Entries()
+        {
+            return View();
+        }
     }
 }

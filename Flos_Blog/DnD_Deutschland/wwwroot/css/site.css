@@ -24,13 +24,15 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
 
 .main-nav-list li { display: inline-block; }
 
-.main-nav-list li:hover { background-color: #D2D7D3; }
+    .main-nav-list li:hover {
+        background-color: #95A5A6;
+    }
 
-.main-nav-list li:hover a { color: #000000; }
+.main-nav-list li:hover a { color: #ffffff; }
 
-.main-nav-list li:hover .main-nav-sublist a { color: #ffffff; }
+.main-nav-list li:hover .main-nav-sublist a { color: #000000; }
 
-.main-nav-list li:hover .main-nav-sublist li:hover a { color: #000000; }
+.main-nav-list li:hover .main-nav-sublist li:hover a { color: #ffffff; }
 
 .main-nav-list a {
     padding: 1rem;
@@ -46,7 +48,7 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
     list-style: none;
     padding: 0;
     margin: 0;
-    background-color: #95A5A6;
+    background-color: #D2D7D3;
 }
 
 .main-nav-sublist li:first-child { padding-top: 0; }
@@ -76,9 +78,11 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
     color: #ffffff;
 }
 
-.main-nav-login-list li:hover { background-color: #D2D7D3; }
+    .main-nav-login-list li:hover {
+        background-color: #95A5A6;
+    }
 
-.main-nav-login-list li:hover a { color: #000000; }
+.main-nav-login-list li:hover a { color: #ffffff; }
 
 footer {
     padding: 1rem;
@@ -92,7 +96,7 @@ section {
     border-bottom: 0.125rem solid #BDC3C7;
 }
 
-section:first-child { border-top: 0.125rem solid #BDC3C7; }
+section:first-child { border-top: none; }
 
 section:last-child { border-bottom: none; }
 
@@ -100,4 +104,30 @@ article {
     padding: 1rem;
     background-color: #ffffff;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+
+.sub-nav {
+    font-family: "Metamorphous", cursive;
+    background-color: #6C7A89;
+}
+
+.sub-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sub-nav ul li {
+    display: inline-block;
+}
+
+    .sub-nav ul li:hover {
+        background-color: #95A5A6;
+    }
+
+.sub-nav ul li a {
+    color: #ffffff;
+    padding: 1rem;
+    text-decoration: none;
+    display: block;
 }
