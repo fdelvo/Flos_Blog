@@ -1,4 +1,34 @@
 ﻿$(document).ready(function () {
+    const getEntriesForAdmin = function () {
+        $.ajax({
+                type: "GET",
+                url: "/api/entries/getentries",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+            .done(function (data) {
+                data.forEach(function (item, index) {
+                    $("#data").append(
+                        `<tr>
+                            <td>${item.entryTitle}</td>
+                            <td>${item.entryDate}</td>
+                            <td>${item.entryAuthor}</td>
+                            <td>
+                                <a asp-controller='admin' asp-action='edit'>Edit</a>
+                                <a id='delete-link'>Delete</a>
+                            </td>
+                        </tr>`
+                    );
+                });
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+    };
+
     $("#entry-form").submit(function (event) {
         const entryFormData = {
             EntryTitle: $("input[name=title]").val(),
@@ -13,7 +43,8 @@
             dataType: "json"
         })
             .done(function () {
-
+                $("#entry-form").trigger("reset");
+                getEntriesForAdmin();
             })
             .fail(function () {
 
@@ -79,35 +110,5 @@
         event.preventDefault();
     });
 
-    const getEntriesForAdmin = function () {
-        $.ajax({
-                type: "GET",
-                url: "/api/entries/getentries",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            })
-            .done(function (data) {
-                data.forEach(function (item, index) {
-                    $("#data").append(
-                        `<tr>
-                            <td>${item.entryTitle}</td>
-                            <td>${item.entryDate}</td>
-                            <td>${item.entryAuthor}</td>
-                            <td>
-                                <a asp-controller='admin' asp-action='edit'>Edit</a>
-                                <a id='delete-link'>Delete</a>
-                            </td>
-                        </tr>`
-                    );
-                });
-            })
-            .fail(function () {
-
-            })
-            .always(function () {
-
-            });
-    };
-
-    $("#entries-for-admin").load(getEntriesForAdmin);
+    $("#entries-for-admin").on("load", getEntriesForAdmin());
 });
