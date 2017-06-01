@@ -19,15 +19,4 @@ namespace DnD_Deutschland.Models
         public DateTime EntryDate { get; set; }
         public ApplicationUser EntryAuthor { get; set; }
     }
-
-    public class BlogEntry : Entry
-    {
-        public virtual ICollection<Tag> BlogEntryTags { get; set; }
-    }
-
-    public class ForumEntry : Entry
-    {
-        [Required]
-        public virtual ForumCategory ForumEntryCategory { get; set; }
-    }
 }

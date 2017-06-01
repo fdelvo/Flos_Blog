@@ -131,3 +131,49 @@ article {
     text-decoration: none;
     display: block;
 }
+
+form {
+
+}
+
+label {
+
+}
+
+input, textarea {
+    display: block;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    width: 100%;
+}
+
+    input[type=submit] {
+        background: white;
+        padding: 0.5rem;
+        border: 0.125rem solid #BDC3C7;
+        font-family: "Metamorphous", cursive;
+    }
+
+    input[type=submit]:hover {
+        cursor: pointer;
+        background-color: #BDC3C7;
+        color: #ffffff;
+    }
+
+textarea {
+    height: 10rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #BDC3C7;
+}
+
+thead th {
+    text-align: left;
+    color: #ffffff;
+}

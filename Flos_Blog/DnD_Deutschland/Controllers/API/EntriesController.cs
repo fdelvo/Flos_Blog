@@ -11,7 +11,7 @@ using DnD_Deutschland.Models;
 namespace DnD_Deutschland.Controllers.API
 {
     [Produces("application/json")]
-    [Route("api/Entries")]
+    [Route("api/entries")]
     public class EntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,18 +23,21 @@ namespace DnD_Deutschland.Controllers.API
 
         // GET: api/Entries
         [HttpGet]
+        [Route("GetEntries")]
         public IEnumerable<Entry> GetEntries()
         {
             return _context.Entries;
         }
 
         [HttpGet]
+        [Route("GetBlogEntries")]
         public IEnumerable<BlogEntry> GetBlogEntries()
         {
             return _context.BlogEntries;
         }
 
         [HttpGet]
+        [Route("GetForumEntries")]
         public IEnumerable<ForumEntry> GetForumEntries()
         {
             return _context.ForumEntries;
@@ -67,7 +70,7 @@ namespace DnD_Deutschland.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            var entry = await _context.BlogEntries.SingleOrDefaultAsync(m => m.EntryId == id);
+            var entry = await _context.BlogEntries.SingleOrDefaultAsync(m => m.BlogEntryId == id);
 
             if (entry == null)
             {
@@ -85,7 +88,7 @@ namespace DnD_Deutschland.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            var entry = await _context.ForumEntries.SingleOrDefaultAsync(m => m.EntryId == id);
+            var entry = await _context.ForumEntries.SingleOrDefaultAsync(m => m.ForumEntryId == id);
 
             if (entry == null)
             {
@@ -138,6 +141,9 @@ namespace DnD_Deutschland.Controllers.API
             {
                 return BadRequest(ModelState);
             }
+
+            entry.EntryDate = DateTime.Now;
+            entry.EntryId = Guid.NewGuid();
 
             _context.Entries.Add(entry);
             await _context.SaveChangesAsync();

@@ -8,8 +8,8 @@ using DnD_Deutschland.Data;
 namespace DnD_Deutschland.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170528152128_Initial")]
-    partial class Initial
+    [Migration("20170531235834_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,12 +69,34 @@ namespace DnD_Deutschland.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("DnD_Deutschland.Models.BlogEntry", b =>
+                {
+                    b.Property<Guid>("BlogEntryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BlogEntryAuthorId");
+
+                    b.Property<string>("BlogEntryContent")
+                        .IsRequired();
+
+                    b.Property<DateTime>("BlogEntryDate");
+
+                    b.Property<string>("BlogEntryTitle")
+                        .IsRequired();
+
+                    b.HasKey("BlogEntryId");
+
+                    b.HasIndex("BlogEntryAuthorId");
+
+                    b.ToTable("BlogEntries");
+                });
+
             modelBuilder.Entity("DnD_Deutschland.Models.Comment", b =>
                 {
                     b.Property<Guid>("CommentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("BlogEntryCommentEntryId");
+                    b.Property<Guid?>("BlogEntryCommentBlogEntryId");
 
                     b.Property<string>("CommentAuthorId");
 
@@ -83,19 +105,17 @@ namespace DnD_Deutschland.Data.Migrations
 
                     b.Property<DateTime>("CommentDate");
 
-                    b.Property<Guid?>("CommentEntryCommentCommentId");
+                    b.Property<Guid>("CommentOnComment");
 
-                    b.Property<Guid?>("ForumEntryCommentEntryId");
+                    b.Property<Guid?>("ForumEntryCommentForumEntryId");
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("BlogEntryCommentEntryId");
+                    b.HasIndex("BlogEntryCommentBlogEntryId");
 
                     b.HasIndex("CommentAuthorId");
 
-                    b.HasIndex("CommentEntryCommentCommentId");
-
-                    b.HasIndex("ForumEntryCommentEntryId");
+                    b.HasIndex("ForumEntryCommentForumEntryId");
 
                     b.ToTable("Comments");
                 });
@@ -104,9 +124,6 @@ namespace DnD_Deutschland.Data.Migrations
                 {
                     b.Property<Guid>("EntryId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
 
                     b.Property<string>("EntryAuthorId");
 
@@ -123,8 +140,6 @@ namespace DnD_Deutschland.Data.Migrations
                     b.HasIndex("EntryAuthorId");
 
                     b.ToTable("Entries");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Entry");
                 });
 
             modelBuilder.Entity("DnD_Deutschland.Models.ForumCategory", b =>
@@ -141,18 +156,44 @@ namespace DnD_Deutschland.Data.Migrations
                     b.ToTable("ForumCategories");
                 });
 
+            modelBuilder.Entity("DnD_Deutschland.Models.ForumEntry", b =>
+                {
+                    b.Property<Guid>("ForumEntryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ForumEntryAuthorId");
+
+                    b.Property<Guid?>("ForumEntryCategoryForumCategoryId");
+
+                    b.Property<string>("ForumEntryContent")
+                        .IsRequired();
+
+                    b.Property<DateTime>("ForumEntryDate");
+
+                    b.Property<string>("ForumEntryTitle")
+                        .IsRequired();
+
+                    b.HasKey("ForumEntryId");
+
+                    b.HasIndex("ForumEntryAuthorId");
+
+                    b.HasIndex("ForumEntryCategoryForumCategoryId");
+
+                    b.ToTable("ForumEntries");
+                });
+
             modelBuilder.Entity("DnD_Deutschland.Models.Tag", b =>
                 {
                     b.Property<Guid>("TagId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("BlogEntryEntryId");
+                    b.Property<Guid?>("BlogEntryId");
 
                     b.Property<string>("TagKeyword");
 
                     b.HasKey("TagId");
 
-                    b.HasIndex("BlogEntryEntryId");
+                    b.HasIndex("BlogEntryId");
 
                     b.ToTable("Tags");
                 });
@@ -266,44 +307,24 @@ namespace DnD_Deutschland.Data.Migrations
 
             modelBuilder.Entity("DnD_Deutschland.Models.BlogEntry", b =>
                 {
-                    b.HasBaseType("DnD_Deutschland.Models.Entry");
-
-
-                    b.ToTable("BlogEntry");
-
-                    b.HasDiscriminator().HasValue("BlogEntry");
-                });
-
-            modelBuilder.Entity("DnD_Deutschland.Models.ForumEntry", b =>
-                {
-                    b.HasBaseType("DnD_Deutschland.Models.Entry");
-
-                    b.Property<Guid>("ForumEntryCategoryForumCategoryId");
-
-                    b.HasIndex("ForumEntryCategoryForumCategoryId");
-
-                    b.ToTable("ForumEntry");
-
-                    b.HasDiscriminator().HasValue("ForumEntry");
+                    b.HasOne("DnD_Deutschland.Models.ApplicationUser", "BlogEntryAuthor")
+                        .WithMany()
+                        .HasForeignKey("BlogEntryAuthorId");
                 });
 
             modelBuilder.Entity("DnD_Deutschland.Models.Comment", b =>
                 {
                     b.HasOne("DnD_Deutschland.Models.BlogEntry", "BlogEntryComment")
                         .WithMany()
-                        .HasForeignKey("BlogEntryCommentEntryId");
+                        .HasForeignKey("BlogEntryCommentBlogEntryId");
 
                     b.HasOne("DnD_Deutschland.Models.ApplicationUser", "CommentAuthor")
                         .WithMany()
                         .HasForeignKey("CommentAuthorId");
 
-                    b.HasOne("DnD_Deutschland.Models.Comment", "CommentEntryComment")
-                        .WithMany()
-                        .HasForeignKey("CommentEntryCommentCommentId");
-
                     b.HasOne("DnD_Deutschland.Models.ForumEntry", "ForumEntryComment")
                         .WithMany()
-                        .HasForeignKey("ForumEntryCommentEntryId");
+                        .HasForeignKey("ForumEntryCommentForumEntryId");
                 });
 
             modelBuilder.Entity("DnD_Deutschland.Models.Entry", b =>
@@ -313,11 +334,22 @@ namespace DnD_Deutschland.Data.Migrations
                         .HasForeignKey("EntryAuthorId");
                 });
 
+            modelBuilder.Entity("DnD_Deutschland.Models.ForumEntry", b =>
+                {
+                    b.HasOne("DnD_Deutschland.Models.ApplicationUser", "ForumEntryAuthor")
+                        .WithMany()
+                        .HasForeignKey("ForumEntryAuthorId");
+
+                    b.HasOne("DnD_Deutschland.Models.ForumCategory", "ForumEntryCategory")
+                        .WithMany()
+                        .HasForeignKey("ForumEntryCategoryForumCategoryId");
+                });
+
             modelBuilder.Entity("DnD_Deutschland.Models.Tag", b =>
                 {
                     b.HasOne("DnD_Deutschland.Models.BlogEntry")
                         .WithMany("BlogEntryTags")
-                        .HasForeignKey("BlogEntryEntryId");
+                        .HasForeignKey("BlogEntryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -354,14 +386,6 @@ namespace DnD_Deutschland.Data.Migrations
                     b.HasOne("DnD_Deutschland.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DnD_Deutschland.Models.ForumEntry", b =>
-                {
-                    b.HasOne("DnD_Deutschland.Models.ForumCategory", "ForumEntryCategory")
-                        .WithMany()
-                        .HasForeignKey("ForumEntryCategoryForumCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

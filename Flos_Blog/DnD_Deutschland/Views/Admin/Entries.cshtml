@@ -14,5 +14,39 @@
 </nav>
 <section>
     <h2>Einträge</h2>
+    <article>
+        <form>
+            <label>Titel</label>
+            <input type="text" name="title"/>
+            <label>Inhalt</label>
+            <textarea id="content"></textarea>
+            <input type="submit" value="Speichern" />
+        </form>
+    </article>
+    <article>
+        <table>
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Datum</th>
+                    <th>Autor</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Pagination</td>
+                </tr>
+            </tfoot>
+        </table>
+    </article>
 </section>
 
