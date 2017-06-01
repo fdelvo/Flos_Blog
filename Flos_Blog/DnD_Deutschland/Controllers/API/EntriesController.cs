@@ -135,6 +135,7 @@ namespace DnD_Deutschland.Controllers.API
 
         // POST: api/Entries
         [HttpPost]
+        [Route("postentry")]
         public async Task<IActionResult> PostEntry([FromBody] Entry entry)
         {
             if (!ModelState.IsValid)
