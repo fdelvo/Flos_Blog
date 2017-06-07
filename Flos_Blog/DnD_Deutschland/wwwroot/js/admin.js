@@ -14,8 +14,8 @@
                             <td>${item.entryDate}</td>
                             <td>${item.entryAuthor}</td>
                             <td>
-                                <a asp-controller='admin' asp-action='edit'>Edit</a>
-                                <a id='delete-link'>Delete</a>
+                                <a href='/Admin/Entries/Edit/${item.entryId}'>Edit</a>
+                                <a href='#' onclick='deleteEntry(${item.entryId})'>Delete</a>
                             </td>
                         </tr>`
                     );

@@ -2,7 +2,12 @@
 @{
     ViewData["Title"] = "Entries";
 }
-
+<environment names="Development">
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/js/admin.min.js" asp-append-version="true"></script>
+</environment>
 <nav class="sub-nav">
     <ul>
         <li><a asp-controller="admin" asp-action="index">Admin</a></li>

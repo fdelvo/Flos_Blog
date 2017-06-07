@@ -8,6 +8,11 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-DnD_Deutschland-b78ac0b1-3772-41cd-aeea-61122f0e1d11</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\admin.js" />
+    <Content Include="wwwroot\js\admin.min.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
