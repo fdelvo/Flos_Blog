@@ -16,7 +16,8 @@ namespace DnD_Deutschland.Models
         [Required]
         public string ForumEntryContent { get; set; }
 
-        public DateTime ForumEntryDate { get; set; }
+        public DateTime ForumEntryCreatedDate { get; set; }
+        public DateTime ForumEntryLastEditedDate { get; set; }
         public ApplicationUser ForumEntryAuthor { get; set; }
         public virtual ForumCategory ForumEntryCategory { get; set; }
     }

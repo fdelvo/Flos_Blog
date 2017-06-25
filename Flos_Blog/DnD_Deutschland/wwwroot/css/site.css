@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
 
 .main-nav {
     font-family: "Metamorphous", cursive;
-    background-color: #6C7A89;
+    background-color: #118AB2   ;
 }
 
 .main-nav-list {
@@ -25,12 +25,12 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
 .main-nav-list li { display: inline-block; }
 
     .main-nav-list li:hover {
-        background-color: #95A5A6;
+        background-color: #51A9C7;
     }
 
 .main-nav-list li:hover a { color: #ffffff; }
 
-.main-nav-list li:hover .main-nav-sublist a { color: #000000; }
+.main-nav-list li:hover .main-nav-sublist a { color: #ffffff; }
 
 .main-nav-list li:hover .main-nav-sublist li:hover a { color: #ffffff; }
 
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
     list-style: none;
     padding: 0;
     margin: 0;
-    background-color: #D2D7D3;
+    background-color: #92C9DC;
 }
 
 .main-nav-sublist li:first-child { padding-top: 0; }
@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6 { font-family: "Metamorphous", cursive; }
 }
 
     .main-nav-login-list li:hover {
-        background-color: #95A5A6;
+        background-color: #51A9C7;
     }
 
 .main-nav-login-list li:hover a { color: #ffffff; }
@@ -108,7 +108,7 @@ article {
 
 .sub-nav {
     font-family: "Metamorphous", cursive;
-    background-color: #6C7A89;
+    background-color: #BEDFEA;
 }
 
 .sub-nav ul {
@@ -122,11 +122,11 @@ article {
 }
 
     .sub-nav ul li:hover {
-        background-color: #95A5A6;
+        background-color: #E9F4F8;
     }
 
 .sub-nav ul li a {
-    color: #ffffff;
+    color: #000000;
     padding: 1rem;
     text-decoration: none;
     display: block;
@@ -147,18 +147,18 @@ input, textarea {
     width: 100%;
 }
 
-    input[type=submit] {
-        background: white;
+    input[type=submit], button {
+        background-color: #ffffff;
         padding: 0.5rem;
-        border: 0.125rem solid #BDC3C7;
+        border: 0.125rem solid #073B4C;
         font-family: "Metamorphous", cursive;
     }
 
-    input[type=submit]:hover {
-        cursor: pointer;
-        background-color: #BDC3C7;
-        color: #ffffff;
-    }
+        input[type=submit]:hover, button:hover {
+            cursor: pointer;
+            background-color: #073B4C;
+            color: #ffffff;
+        }
 
 textarea {
     height: 10rem;
@@ -170,10 +170,10 @@ table {
 }
 
 thead {
-    background-color: #BDC3C7;
+    background-color: #FFD166;
 }
 
 thead th {
     text-align: left;
-    color: #ffffff;
+    color: #000000;
 }

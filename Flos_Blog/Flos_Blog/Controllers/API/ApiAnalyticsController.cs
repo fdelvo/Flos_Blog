@@ -27,25 +27,24 @@ namespace Flos_Blog.Controllers.API
                 AboutVisits = pageVisits.Where(i => i.Link == "/About" || i.Link == "/About/Index").Sum(i => i.Clicks),
                 ArchiveVisits = pageVisits.Where(i => i.Link == "/Archive" || i.Link == "/Archive/Index")
                     .Sum(i => i.Clicks),
-                TimeSpentOnHome = (double) pageVisits
+                TimeSpentOnHome = Median(pageVisits
                                       .Where(i => i.Link == "/" || i.Link == "/Home" || i.Link == "/Home/Index")
-                                      .Sum(i => i.TimeSpentOnPage) /
-                                  pageVisits.Where(i => i.Link == "/" || i.Link == "/Home" || i.Link == "/Home/Index")
-                                      .Sum(i => i.Clicks),
-                TimeSpentOnAbout = (double) pageVisits.Where(i => i.Link == "/About" || i.Link == "/About/Index")
-                                       .Average(i => i.TimeSpentOnPage) /
-                                   pageVisits.Where(i => i.Link == "/About" || i.Link == "/About/Index")
-                                       .Sum(i => i.Clicks),
-                TimeSpentOnArchive = (double) pageVisits.Where(i => i.Link == "/Archive" || i.Link == "/Archive/Index")
-                                         .Average(i => i.TimeSpentOnPage) /
-                                     pageVisits.Where(i => i.Link == "/Archive" || i.Link == "/Archive/Index")
-                                         .Sum(i => i.Clicks)
+                                      .Select(i => i.TimeSpentOnPage)
+                                      .ToList()),
+                TimeSpentOnAbout = Median(pageVisits
+                                      .Where(i => i.Link == "/About" || i.Link == "/About/Index")
+                                      .Select(i => i.TimeSpentOnPage)
+                                      .ToList()),
+                TimeSpentOnArchive = Median(pageVisits
+                                      .Where(i => i.Link == "/Archive" || i.Link == "/Archive/Index")
+                                      .Select(i => i.TimeSpentOnPage)
+                                      .ToList())
             };
 
             return Ok(pageVisitsVm);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IHttpActionResult> SavePageVisit(PageVisitViewModel model)
         {
             var domainIndex = 0;
@@ -68,17 +67,13 @@ namespace Flos_Blog.Controllers.API
 
             model.Link = model.Link.Substring(domainIndex);
 
-            var page = await _db.PageVisits.FirstOrDefaultAsync(i => i.Link == model.Link);
+                var newPage = new PageVisit();
+                newPage.PageVisitId = Guid.NewGuid();
+                newPage.Link = model.Link;
+                newPage.Clicks = 1;
+                newPage.TimeSpentOnPage = model.TimeSpentOnPage;
 
-            if (page == null)
-            {
-                return NotFound();
-            }
-
-            page.Clicks += 1;
-            page.TimeSpentOnPage = model.TimeSpentOnPage;
-
-            _db.Entry(page).State = EntityState.Modified;
+            _db.PageVisits.Add(newPage);
 
             try
             {
@@ -89,6 +84,19 @@ namespace Flos_Blog.Controllers.API
             }
 
             return Ok();
+        }
+
+        private static double Median(List<int> list)
+        {
+            list.Sort();
+            var index = 0;
+            if (list.Count % 2 != 0)
+            {
+                index = (list.Count + 1) / 2;
+                return list[index-1];
+            }
+
+            return (list[((list.Count / 2)-1)] + list[(list.Count / 2)])/2;
         }
     }
 }

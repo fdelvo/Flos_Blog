@@ -3,10 +3,10 @@
     ViewData["Title"] = "Entries";
 }
 <environment names="Development">
-    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script src="~/js/adminEntries.js" asp-append-version="true"></script>
 </environment>
 <environment names="Staging,Production">
-    <script src="~/js/admin.min.js" asp-append-version="true"></script>
+    <script src="~/js/adminEntries.min.js" asp-append-version="true"></script>
 </environment>
 <nav class="sub-nav">
     <ul>
@@ -25,6 +25,21 @@
             <input type="text" name="title"/>
             <label>Inhalt</label>
             <textarea id="content"></textarea>
+            <input type="submit" value="Erstellen" />
+        </form>
+        <form id="entry-edit-form">
+            <label>Titel</label>
+            <input type="text" name="title" />
+            <label>Id</label>
+            <input type="text" name="entry-id" disabled />
+            <label>Autor</label>
+            <input type="text" name="author" disabled />
+            <label>Erstellt am</label>
+            <input type="text" name="created-date" disabled />
+            <label>Zuletzt bearbeitet am</label>
+            <input type="text" name="last-edited-date" disabled />
+            <label>Inhalt</label>
+            <textarea id="content"></textarea>
             <input type="submit" value="Speichern" />
         </form>
     </article>
@@ -33,7 +48,7 @@
             <thead>
                 <tr>
                     <th>Titel</th>
-                    <th>Datum</th>
+                    <th>Erstellt am</th>
                     <th>Autor</th>
                     <th>Aktionen</th>
                 </tr>

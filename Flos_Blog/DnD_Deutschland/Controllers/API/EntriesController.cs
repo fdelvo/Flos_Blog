@@ -23,28 +23,15 @@ namespace DnD_Deutschland.Controllers.API
 
         // GET: api/Entries
         [HttpGet]
-        [Route("GetEntries")]
+        [Route("getentries")]
         public IEnumerable<Entry> GetEntries()
         {
             return _context.Entries;
         }
 
-        [HttpGet]
-        [Route("GetBlogEntries")]
-        public IEnumerable<BlogEntry> GetBlogEntries()
-        {
-            return _context.BlogEntries;
-        }
-
-        [HttpGet]
-        [Route("GetForumEntries")]
-        public IEnumerable<ForumEntry> GetForumEntries()
-        {
-            return _context.ForumEntries;
-        }
-
         // GET: api/Entries/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("getentry/{id}")]
         public async Task<IActionResult> GetEntry([FromRoute] Guid id)
         {
             if (!ModelState.IsValid)
@@ -62,44 +49,9 @@ namespace DnD_Deutschland.Controllers.API
             return Ok(entry);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBlogEntry([FromRoute] Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var entry = await _context.BlogEntries.SingleOrDefaultAsync(m => m.BlogEntryId == id);
-
-            if (entry == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(entry);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetForumEntry([FromRoute] Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var entry = await _context.ForumEntries.SingleOrDefaultAsync(m => m.ForumEntryId == id);
-
-            if (entry == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(entry);
-        }
-
         // PUT: api/Entries/5
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("PutEntry/{id}")]
         public async Task<IActionResult> PutEntry([FromRoute] Guid id, [FromBody] Entry entry)
         {
             if (!ModelState.IsValid)
@@ -112,6 +64,7 @@ namespace DnD_Deutschland.Controllers.API
                 return BadRequest();
             }
 
+            entry.EntryLastEditedDate = DateTime.Now;
             _context.Entry(entry).State = EntityState.Modified;
 
             try
@@ -143,7 +96,7 @@ namespace DnD_Deutschland.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            entry.EntryDate = DateTime.Now;
+            entry.EntryCreatedDate = DateTime.Now;
             entry.EntryId = Guid.NewGuid();
 
             _context.Entries.Add(entry);
@@ -153,7 +106,8 @@ namespace DnD_Deutschland.Controllers.API
         }
 
         // DELETE: api/Entries/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("DeleteEntry/{id}")]
         public async Task<IActionResult> DeleteEntry([FromRoute] Guid id)
         {
             if (!ModelState.IsValid)

@@ -16,7 +16,8 @@ namespace DnD_Deutschland.Models
         [Required]
         public string BlogEntryContent { get; set; }
 
-        public DateTime BlogEntryDate { get; set; }
+        public DateTime BlogEntryCreatedDate { get; set; }
+        public DateTime BlogEntryLastEditedDate { get; set; }
         public ApplicationUser BlogEntryAuthor { get; set; }
         public virtual ICollection<Tag> BlogEntryTags { get; set; }
     }

@@ -16,7 +16,8 @@ namespace DnD_Deutschland.Models
         [Required]
         public string EntryContent { get; set; }
 
-        public DateTime EntryDate { get; set; }
+        public DateTime EntryCreatedDate { get; set; }
+        public DateTime EntryLastEditedDate { get; set; }
         public ApplicationUser EntryAuthor { get; set; }
     }
 }

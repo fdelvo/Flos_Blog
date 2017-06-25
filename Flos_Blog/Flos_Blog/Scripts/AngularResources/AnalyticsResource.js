@@ -17,13 +17,8 @@ function AnalyticsResource($resource) {
                 isArray: true,
                 headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
             },
-            SavePageStayDuration: {
-                method: "POST",
-                url: "/api/apianalytics/savepagestayduration",
-                headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
-            },
             SavePageVisit: {
-                method: "PUT",
+                method: "POST",
                 url: "/api/apianalytics/savepagevisit",
                 headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
             }
