@@ -60,6 +60,10 @@ namespace Flos_Blog.Controllers.API
             {
                 domainIndex = model.Link.IndexOf(".blog", StringComparison.Ordinal) + 5;
             }
+            else if (model.Link.Contains(".org"))
+            {
+                domainIndex = model.Link.IndexOf(".org", StringComparison.Ordinal) + 4;
+            }
             else
             {
                 domainIndex = model.Link.IndexOf(":61145", StringComparison.Ordinal) + 6;
