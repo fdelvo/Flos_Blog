@@ -220,13 +220,28 @@ namespace Flos_Blog.Controllers.API
 
             if (_db.TextStays.Any(i => i.Text.TextId == id))
             {
-                average = _db.TextStays
+                average = Median(
+                    _db.TextStays
                     .Include(t => t.Text)
                     .Where(t => t.Text.TextId == id)
-                    .Average(i => i.Duration);
+                    .Select(i => i.Duration)
+                    .ToList());
             }
 
             return average;
+        }
+
+        private static double Median(List<int> list)
+        {
+            list.Sort();
+            var index = 0;
+            if (list.Count % 2 != 0)
+            {
+                index = (list.Count + 1) / 2;
+                return list[index - 1];
+            }
+
+            return (list[((list.Count / 2) - 1)] + list[(list.Count / 2)]) / 2;
         }
 
         // PUT: api/ApiTexts/5
