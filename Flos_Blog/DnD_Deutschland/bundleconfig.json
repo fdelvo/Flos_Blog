@@ -24,7 +24,7 @@
   {
     "outputFileName": "wwwroot/js/admin.min.js",
     "inputFiles": [
-      "wwwroot/js/admin.js"
+      "wwwroot/js/entries.js"
     ],
     // Optionally specify minification options
     "minify": {

@@ -49,6 +49,26 @@ namespace DnD_Deutschland.Controllers.API
             return Ok(entry);
         }
 
+        // GET: api/Entries/5
+        [HttpGet]
+        [Route("getentrybytitle/{title}")]
+        public async Task<IActionResult> GetEntryByTitle([FromRoute] String title)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entry = await _context.Entries.SingleOrDefaultAsync(m => m.EntryTitle == title);
+
+            if (entry == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(entry);
+        }
+
         // PUT: api/Entries/5
         [HttpPut]
         [Route("PutEntry/{id}")]
@@ -130,6 +150,12 @@ namespace DnD_Deutschland.Controllers.API
         private bool EntryExists(Guid id)
         {
             return _context.Entries.Any(e => e.EntryId == id);
+        }
+
+        public JsonResult EntryWithTitleExists(string title)
+        {
+            //check if any of the UserName matches the UserName specified in the Parameter using the ANY extension method.  
+            return Json(!_context.Entries.Any(x => x.EntryTitle == title));
         }
     }
 }

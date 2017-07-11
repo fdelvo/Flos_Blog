@@ -13,6 +13,7 @@
             $("#entry-edit-form input[name=created-date]").val(data.entryCreatedDate);
             $("#entry-edit-form input[name=last-edited-date]").val(data.entryLastEditedDate);
             $("#entry-edit-form input[name=author]").val(data.entryAuthor);
+            $("#entry-edit-form input[name=keyword]").val(data.entryKeyword);
             $("#entry-edit-form #content").val(data.entryContent);
         })
         .fail(function () {
@@ -54,6 +55,7 @@ const getEntriesForAdmin = function () {
                 $("#data").append(
                     `<tr>
                             <td>${item.entryTitle}</td>
+                            <td>${item.entryKeyword}</td>
                             <td>${item.entryCreatedDate}</td>
                             <td>${item.entryAuthor}</td>
                             <td>
@@ -81,6 +83,7 @@ $(document).ready(function () {
     $("#entry-edit-form").submit(function (event) {
         const entryFormData = {
             EntryTitle: $("#entry-edit-form input[name=title]").val(),
+            EntryKeyword: $("#entry-edit-form input[name=keyword]").val(),
             EntryId: $("#entry-edit-form input[name=entry-id]").val(),
             EntryContent: $("#entry-edit-form #content").val(),
             EntryCreatedDate: $("#entry-edit-form input[name=created-date]").val(),
@@ -113,6 +116,7 @@ $(document).ready(function () {
     $("#entry-form").submit(function (event) {
         const entryFormData = {
             EntryTitle: $("#entry-form input[name=title]").val(),
+            EntryKeyword: $("#entry-form input[name=keyword]").val(),
             EntryContent: $("#entry-form #content").val(),
             url: "/api/entries/postentry"
         };
