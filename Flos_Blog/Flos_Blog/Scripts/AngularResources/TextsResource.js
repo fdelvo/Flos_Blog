@@ -29,6 +29,11 @@ function TextsResource($resource) {
                 url: "/api/apitexts/gettext",
                 headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
             },
+            GetSticky: {
+                method: "GET",
+                url: "/api/apitexts/getsticky",
+                headers: { "Authorization": `Bearer ${localStorage.getItem("tokenKey")}` }
+            },
             SearchText: {
                 method: "GET",
                 url: "/api/apitexts/searchtext",

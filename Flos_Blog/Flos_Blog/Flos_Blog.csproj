@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -256,6 +257,10 @@
     <Compile Include="Migrations\201703161636045_text_publish_date.cs" />
     <Compile Include="Migrations\201703161636045_text_publish_date.Designer.cs">
       <DependentUpon>201703161636045_text_publish_date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801080412249_text_type.cs" />
+    <Compile Include="Migrations\201801080412249_text_type.Designer.cs">
+      <DependentUpon>201801080412249_text_type.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1115,6 +1120,9 @@
     <EmbeddedResource Include="Migrations\201703161636045_text_publish_date.resx">
       <DependentUpon>201703161636045_text_publish_date.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801080412249_text_type.resx">
+      <DependentUpon>201801080412249_text_type.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1130,7 +1138,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61145</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

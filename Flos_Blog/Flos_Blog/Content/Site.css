@@ -21,6 +21,14 @@ textarea { max-width: 280px; }
 
 pre { display: inline; }
 
+.badge {
+    border: 2px solid #6C698D;
+    border-radius: 2px;
+    padding: 0.25rem;
+    color: #6C698D;
+    font-weight: 700;
+}
+
 nav {
     background-color: #6C698D;
     bottom: 0;
@@ -107,6 +115,20 @@ article { padding: 1em; }
 .preview h2 a {
     color: rgb(68, 68, 68);
     text-decoration: none;
+}
+
+.announcement {
+    padding: 1rem;
+}
+
+.announcement h2 a {
+    color: rgb(68, 68, 68);
+    text-decoration: none;
+}
+
+.announcement {
+    border-top: 0.1em solid red;
+    border-bottom-color: red;
 }
 
 article {

@@ -12,5 +12,8 @@ namespace Flos_Blog.Models
         public int TextShares { get; set; }
         public bool TextPublished { get; set; }
         public DateTime TextPublishDate { get; set; }
+        public bool TextProse { get; set; }
+        public bool TextPoetry { get; set; }
+        public bool TextBlog { get; set; }
     }
 }

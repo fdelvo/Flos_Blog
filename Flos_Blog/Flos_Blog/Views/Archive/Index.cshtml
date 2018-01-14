@@ -29,7 +29,7 @@
     </nav>
     <article class="preview" ng-repeat="t in texts track by t.TextId">
         <p ng-if="!texts.length">No texts found</p>
-        <h2>{{t.TextTitle}}</h2><span>{{t.TextPublishDate | date: "dd/MM/yyyy @@ HH:mm"}}</span>
+        <h2>{{t.TextTitle}}</h2><span>{{t.TextPublishDate | date: "dd/MM/yyyy @@ HH:mm"}}</span> <span class="badge">{{t.TextType}}</span>
         <p ng-bind-html="(t.TextContent | limitTo: 500) + '...'"></p>
         <a href="/Text/Read/{{t.TextId}}">Lesen</a>
     </article>

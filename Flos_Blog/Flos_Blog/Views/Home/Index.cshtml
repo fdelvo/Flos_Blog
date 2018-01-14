@@ -1,8 +1,16 @@
-﻿<section ng-controller="TextsController" ng-init="GetTexts()">
+﻿<section ng-controller="TextsController" ng-init="GetTexts(); GetSticky();">
+    <article class="announcement">
+        <h2>
+            <a href="/Text/Read/{{sticky.TextId}}">Ankündigungen</a>
+        </h2>
+        <p ng-bind-html="(sticky.TextContent | limitTo: 500) + '...'"></p>
+        <a href="/Text/Read/{{sticky.TextId}}">Lesen</a>
+    </article>
     <article class="preview" ng-repeat="t in texts track by t.TextId">
         <h2>
             <a href="/Text/Read/{{t.TextId}}">{{t.TextTitle}}</a>
         </h2>
+        <span class="badge">{{t.TextType}}</span>
         <p ng-bind-html="(t.TextContent | limitTo: 500) + '...'"></p>
         <a href="/Text/Read/{{t.TextId}}">Lesen</a>
     </article>

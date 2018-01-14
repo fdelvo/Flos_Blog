@@ -159,6 +159,15 @@ function TextsController($scope, $rootScope, TextsResource) {
                 console.log("error");
             })
     };
+    $scope.GetSticky = function () {
+        $scope.sticky = TextsResource.GetSticky(
+            function (response) {
+                console.log("text loaded");
+            },
+            function () {
+                console.log("error");
+            })
+    };
     $scope.MeasureStayOnText = function() {
         var start = Date.now();
         window.addEventListener("beforeunload",

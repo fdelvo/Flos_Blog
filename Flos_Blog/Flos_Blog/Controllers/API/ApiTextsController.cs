@@ -33,7 +33,8 @@ namespace Flos_Blog.Controllers.API
                 TextContent = t.TextContent,
                 TextPublishDate = t.TextPublishDate,
                 TextDate = t.TextDate,
-                TextTitle = t.TextTitle
+                TextTitle = t.TextTitle,
+                TextType = t.TextPoetry ? "Lyrik" : t.TextProse ? "Prosa" : "Blog"
             }));
 
             return Ok(textsViewModel);
@@ -54,7 +55,8 @@ namespace Flos_Blog.Controllers.API
                 TextContent = t.TextContent,
                 TextPublishDate = t.TextPublishDate,
                 TextDate = t.TextDate,
-                TextTitle = t.TextTitle
+                TextTitle = t.TextTitle,
+                TextType = t.TextPoetry ? "Lyrik" : t.TextProse ? "Prosa" : "Blog"
             }));
 
             return Ok(textsViewModel);
@@ -104,7 +106,8 @@ namespace Flos_Blog.Controllers.API
                 TextShares = t.TextShares,
                 TextViews = t.TextViews,
                 TextStayDuration = GetAverageTextStayDuration(t.TextId),
-                TextPublished = t.TextPublished
+                TextPublished = t.TextPublished,
+                TextType = t.TextPoetry ? "Lyrik" : t.TextProse ? "Prosa" : "Blog"
             }));
 
             return Ok(textsViewModel);
@@ -121,6 +124,18 @@ namespace Flos_Blog.Controllers.API
             }
 
             await AddView(id);
+
+            return Ok(text);
+        }
+
+        [ResponseType(typeof(Text))]
+        public async Task<IHttpActionResult> GetSticky()
+        {
+            var text = await _db.Texts.FirstOrDefaultAsync(t => t.TextTitle == "Sticky");
+            if (text == null)
+            {
+                return NotFound();
+            }
 
             return Ok(text);
         }

@@ -8,7 +8,10 @@
             <label>Text Title</label>
             <input type="text" ng-model="text.TextTitle" required/>
             <label>Text Content</label>
-            <textarea ui-tinymce="{trusted: true}" ng-model="text.TextContent" required></textarea>
+            <textarea ui-tinymce="{trusted: true, plugins: 'link',toolbar: 'link',link_context_toolbar: true}" ng-model="text.TextContent" required></textarea>
+            <label>Prose</label><input type="radio" name="text-type" ng-value="true" ng-change="text.TextPoetry = false; text.TextBlog = false;" ng-model="text.TextProse" />
+            <label>Poetry</label><input type="radio" name="text-type" ng-value="true" ng-change="text.TextProse = false; text.TextBlog = false;" ng-model="text.TextPoetry" />
+            <label>Blog</label><input type="radio" name="text-type" ng-value="true" ng-change="text.TextPoetry = false; text.TextProse = false;" ng-model="text.TextBlog" />
             <input type="submit" value="Save"/>
             <p>{{status}}</p>
         </form>

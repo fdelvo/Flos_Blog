@@ -8,7 +8,10 @@
             <label>Text Title</label>
             <input type="text" ng-model="newText.TextTitle" required/>
             <label>Text Content</label>
-            <textarea ui-tinymce="{trusted: true}" ng-model="newText.TextContent" required></textarea>
+            <textarea ui-tinymce="{trusted: true, plugins: 'link',toolbar: 'link',link_context_toolbar: true}" ng-model="newText.TextContent" required></textarea>
+            <label>Prose</label><input type="radio" name="text-type" ng-value="true" ng-change="newText.TextPoetry = false; newText.TextBlog = false;" ng-model="newText.TextProse" />
+            <label>Poetry</label><input type="radio" name="text-type" ng-value="true" ng-change="newText.TextProse = false; newText.TextBlog = false;" ng-model="newText.TextPoetry" />
+            <label>Blog</label><input type="radio" name="text-type" ng-value="true" ng-change="newText.TextPoetry = false; newText.TextProse = false;" ng-model="newText.TextBlog" />
             <input type="submit" value="Submit"/>
             <p>{{status}}</p>
         </form>
@@ -18,6 +21,7 @@
             <thead>
             <tr>
                 <th>Title</th>
+                <th>Type</th>
                 <th>Date</th>
                 <th>Published</th>
                 <th>Views</th>
@@ -32,6 +36,7 @@
             <tbody>
             <tr ng-repeat="t in texts track by t.TextId">
                 <td>{{t.TextTitle}}</td>
+                <td>{{t.TextType}}</td>
                 <td>{{t.TextDate | date: "dd/MM/yyyy @@ HH:mm"}}</td>
                 <td>{{t.TextPublished ? t.TextPublishDate : "n/a" | date: "dd/MM/yyyy @@ HH:mm"}}</td>
                 <td>{{t.TextViews}}</td>

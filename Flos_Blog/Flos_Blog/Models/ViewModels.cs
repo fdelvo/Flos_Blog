@@ -9,6 +9,7 @@ namespace Flos_Blog.Models
         public string TextContent { get; set; }
         public DateTime TextDate { get; set; }
         public DateTime TextPublishDate { get; set; }
+        public string TextType { get; set; }
     }
 
     public class TextAdminViewModel
@@ -22,6 +23,7 @@ namespace Flos_Blog.Models
         public double TextStayDuration { get; set; }
         public bool TextPublished { get; set; }
         public DateTime TextPublishDate { get; set; }
+        public string TextType { get; set; }
     }
 
     public class TextSharedViewModel
